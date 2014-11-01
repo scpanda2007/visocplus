@@ -21,7 +21,7 @@
     <SourceHome>$(WorkHome)src\$(RootNamespace)</SourceHome>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Globals">
-    <SDLLib>$(WorkHome)\ThirdParty\SDL\lib\x86</SDLLib>
+    <SDLLib>$(WorkHome)ThirdParty\SDL\lib\x86</SDLLib>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
