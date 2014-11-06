@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0066)http://www.cnblogs.com/smartvessel/archive/2009/11/25/1610508.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/analytics.js"></script>
+
+<title>windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/bundle-WinXPBlue.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/smartvessel/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/smartvessel/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/smartvessel/wlwmanifest.xml">
+<script async="" type="text/javascript" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/gpt.js"></script><script src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'smartvessel', cb_enable_mathjax=false;</script>
+<script src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/pubads_impl_51.js"></script><script type="text/javascript" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+
+<div id="top">
+	
+<div>
+	<table>
+		<tbody><tr>
+			<td class="HeaderTitles">
+                <h1 class="HeaderTitle"><a id="Header1_HeaderTitle" class="HeaderMainTitle" href="http://www.cnblogs.com/smartvessel/">SmartVessel</a></h1>
+				<p id="tagline">Foucs on C++</p>
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+<div class="HeaderBar">
+	<table id="HeaderBar" class="HeaderBar">
+		<tbody><tr>
+		    <td class="HeaderBarTab" nowrap="">
+		        <img id="Header1_StartButton" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/BlueTabRight.gif" align="absmiddle">
+		        <a id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a><img id="Header1_MyLinks1_Divider1" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/divider.gif" align="absmiddle">
+<a id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/smartvessel/">首页</a><img id="Header1_MyLinks1_Image1" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/divider.gif" align="absmiddle">
+<a id="Header1_MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a><img id="Header1_MyLinks1_Image2" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/divider.gif" align="absmiddle">
+<a id="Header1_MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://space.cnblogs.com/msg/send/SmartVessel">联系</a><img id="Header1_MyLinks1_Divider2" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/divider.gif" align="absmiddle">
+<a id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/smartvessel/rss" target="_blank">订阅</a><img id="Header1_MyLinks1_Divider3" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/divider.gif" align="absmiddle">
+<!--<a id="Header1_MyLinks1_Syndication2" href="../../../../../Atom.aspx" target="_blank">Syndicate this Site (Atom)</a><img id="Header1_MyLinks1_Divider6" src="../../../../../Skins/WinXPBlue/Images/divider.gif" align="absmiddle" />
+<a id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/smartvessel/rss" target="_blank"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>-->
+<a id="Header1_MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a><img id="Header1_MyLinks1_Divider5" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/divider.gif" align="absmiddle">
+
+			</td>
+			<td class="HeaderBarTabBack" nowrap="" width="100%">
+				
+<div class="BlogStatsBar">
+	<table class="BlogStatsBar">
+		<tbody><tr>
+			<td width="100%">
+			</td>
+			<td class="BlogStatsBar" nowrap="">
+				&nbsp;
+				80 
+				Posts&nbsp;::
+				1 Stories
+				::
+				10 Comments
+				::
+				0 Trackbacks
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+
+</div>
+<div id="leftmenu">
+	
+		
+<h3>公告</h3>
+<div class="News">
+	<div id="blog-news" style=""><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/smartvessel/">SmartVessel</a><br>园龄：<a href="http://home.cnblogs.com/u/smartvessel/" title="入园时间：2009-07-06">5年3个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/smartvessel/followers/">7</a><br>关注：<a href="http://home.cnblogs.com/u/smartvessel/followees/">2</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;1a42c45b-d069-de11-9510-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+		<div id="blog-sidecolumn">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/smartvessel/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/smartvessel/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/smartvessel/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/smartvessel/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/smartvessel/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div>
+		<h3>随笔分类</h3>
+		
+				<ul>
+			
+				<li> <a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/smartvessel/category/220340.html">Boost(4)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/smartvessel/category/210205.html">C and C++(23)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/smartvessel/category/329019.html">Computer Vision(1)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/smartvessel/category/484905.html">JavaFX(1)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/smartvessel/category/411109.html">Linux-ArchLinux(1)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/smartvessel/category/411108.html">Linux-CentOS(10)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/smartvessel/category/273672.html">Linux-debian(20)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/smartvessel/category/281396.html">Opencv(2)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/smartvessel/category/198653.html">Oracle数据库(5)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/smartvessel/category/424277.html">Qt(3)</a></li>
+			
+				<li> <a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/smartvessel/category/282432.html">资料收集(5)</a></li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案</h3>
+		
+				<ul>
+			
+				<li> <a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/smartvessel/archive/2013/05.html">2013年5月 (1)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/smartvessel/archive/2013/03.html">2013年3月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/smartvessel/archive/2012/11.html">2012年11月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/smartvessel/archive/2012/10.html">2012年10月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/smartvessel/archive/2012/09.html">2012年9月 (9)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/smartvessel/archive/2011/10.html">2011年10月 (3)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/smartvessel/archive/2011/09.html">2011年9月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/smartvessel/archive/2011/07.html">2011年7月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/smartvessel/archive/2011/06.html">2011年6月 (1)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/smartvessel/archive/2011/05.html">2011年5月 (4)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/smartvessel/archive/2011/04.html">2011年4月 (17)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/smartvessel/archive/2011/03.html">2011年3月 (1)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/smartvessel/archive/2011/02.html">2011年2月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/smartvessel/archive/2011/01.html">2011年1月 (4)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/smartvessel/archive/2010/12.html">2010年12月 (9)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/smartvessel/archive/2010/01.html">2010年1月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/smartvessel/archive/2009/12.html">2009年12月 (3)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/smartvessel/archive/2009/11.html">2009年11月 (4)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/smartvessel/archive/2009/10.html">2009年10月 (3)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/smartvessel/archive/2009/09.html">2009年9月 (1)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/smartvessel/archive/2009/08.html">2009年8月 (2)</a></li>
+			
+				<li> <a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/smartvessel/archive/2009/07.html">2009年7月 (4)</a></li>
+			
+				</ul>
+			
+	<div id="recent_comments_wrap">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/smartvessel/archive/2011/07/18/2109472.html#2972404">1. Re:MFC自定义消息</a></li>
+    <li class="recent_comment_body">nice !succeed!</li>
+    <li class="recent_comment_author">--tianya2543</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/smartvessel/archive/2009/07/06/1517690.html#2912974">2. Re:Oracle数据库-建库、建表空间，建用户</a></li>
+    <li class="recent_comment_body">授权成功, 但是无法用新建的用户登录,ORA-12514</li>
+    <li class="recent_comment_author">--见颜</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/smartvessel/archive/2011/10/20/2218654.html#2889213">3. Re:Hough Transform 霍夫变换检测直线</a></li>
+    <li class="recent_comment_body">请问是怎么实现的一个累加呀</li>
+    <li class="recent_comment_author">--zjzxl</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/smartvessel/archive/2011/10/20/2218654.html#2888680">4. Re:Hough Transform 霍夫变换检测直线</a></li>
+    <li class="recent_comment_body">问一下楼主 你的变量 irho  numrho 代表什么含义呢</li>
+    <li class="recent_comment_author">--zjzxl</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/smartvessel/archive/2009/07/06/1517690.html#2789598">5. Re:Oracle数据库-建库、建表空间，建用户</a></li>
+    <li class="recent_comment_body">@仗剑天涯人最下面一条错误，系统找不到路径，应该是路径"d:\oracle\product\10.1.0\oradata\news"不存在，可能是Oracle的版本不一致造成的。...</li>
+    <li class="recent_comment_author">--剑过不留痕</li>
+</ul>
+</div>
+</div>
+</div><div id="topview_posts_wrap">
+<h3 class="catListTitle">阅读排行榜</h3>
+<div class="RecentComment" id="TopViewPosts"> 
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/smartvessel/archive/2009/07/06/1517690.html">1. Oracle数据库-建库、建表空间，建用户(26058)</a></li><li><a href="http://www.cnblogs.com/smartvessel/archive/2011/01/21/1940868.html">2. [11]缺少动态连接库.so--cannot open shared object file: No such file or directory(17763)</a></li><li><a href="http://www.cnblogs.com/smartvessel/archive/2011/10/20/2218654.html">3. Hough Transform 霍夫变换检测直线(4660)</a></li><li><a href="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园.htm">4. windows下boost开发环境简易教程(cygwin+eclipse)(2801)</a></li><li><a href="http://www.cnblogs.com/smartvessel/archive/2009/08/03/1537320.html">5. ODBC连接ORACLE数据库的设置(2050)</a></li></ul></div>
+</div>
+</div></div><script type="text/javascript">loadBlogSideColumn();</script>
+	
+</div>
+
+<div id="main">
+	
+
+<div class="post">
+	<div class="postTitle">
+		<a id="cb_post_title_url" href="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园.htm">windows下boost开发环境简易教程(cygwin+eclipse)</a>
+	</div>
+	
+	<div class="postText">
+		<div id="cnblogs_post_body"><p class="MsoNormal" style="margin: 0cm 0cm 0pt"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">作者</span><span lang="EN-US"><font face="Calibri">:smartvessel@gmail.com</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: -18pt; mso-char-indent-count: 0; mso-list: l0 level1 lfo1"><span lang="EN-US" style="mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: Calibri; mso-bidi-theme-font: minor-latin"><span style="mso-list: Ignore"><font face="Calibri">1.</font><span style="font: 7pt &#39;Times New Roman&#39;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">安装</span><span lang="EN-US"><font face="Calibri">cygwin, </font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">搭建在</span><span lang="EN-US"><font face="Calibri">windows</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">环境下的</span><span lang="EN-US"><font face="Calibri">gcc, g++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">开发环境</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">下载</span><span lang="EN-US"><font face="Calibri">cygwin(</font><a href="http://www.cygwin.com/" target="_blank"><font face="Calibri" color="#800080">http://www.cygwin.com/</font></a><font face="Calibri">), </font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">双击</span><span lang="EN-US"><font face="Calibri">setup.exe</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，开始安装</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step1:</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><img height="178" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/1.JPG" width="330" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"><v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f"><v:stroke joinstyle="miter"></v:stroke><v:formulas><v:f eqn="if lineDrawn pixelLineWidth 0"></v:f><v:f eqn="sum @0 1 0"></v:f><v:f eqn="sum 0 0 @1"></v:f><v:f eqn="prod @2 1 2"></v:f><v:f eqn="prod @3 21600 pixelWidth"></v:f><v:f eqn="prod @3 21600 pixelHeight"></v:f><v:f eqn="sum @0 0 1"></v:f><v:f eqn="prod @6 1 2"></v:f><v:f eqn="prod @7 21600 pixelWidth"></v:f><v:f eqn="sum @8 21600 0"></v:f><v:f eqn="prod @7 21600 pixelHeight"></v:f><v:f eqn="sum @10 21600 0"></v:f></v:formulas><v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"></v:path><o:lock v:ext="edit" aspectratio="t"></o:lock></v:shapetype></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step2:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">选择将</span><span lang="EN-US"><font face="Calibri">cygwin</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">安装到本地哪个目录</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="164" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/2.JPG" width="473" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step3:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">保持下载的</span><span lang="EN-US"><font face="Calibri">cygwin</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，这样下次可以继续不用连接网络，在本地安装</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="156" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/3.JPG" width="483" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step4:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">选择你的连网方式，并</span><span lang="EN-US"><font face="Calibri">next</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">选择使用哪个镜像</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="118" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/4.JPG" width="326" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step5:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">这一步较为关键，需要选择</span><span lang="EN-US"><font face="Calibri">cygwin</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">环境下的</span><span lang="EN-US"><font face="Calibri">gcc,g++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">包。务必在</span><span lang="EN-US"><font face="Calibri">devel</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">下选择</span><span lang="EN-US"><font face="Calibri">gcc, g++,make and gdb</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="148" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/5.JPG" width="306" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">继续</span><span lang="EN-US"><font face="Calibri">next</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，到安装结束。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: -18pt; mso-char-indent-count: 0; mso-list: l0 level1 lfo1"><span lang="EN-US" style="mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: Calibri; mso-bidi-theme-font: minor-latin"><span style="mso-list: Ignore"><font face="Calibri">2.</font><span style="font: 7pt &#39;Times New Roman&#39;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">安装</span><span lang="EN-US"><font face="Calibri">boost</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step1:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">下载</span><span lang="EN-US"><font face="Calibri">boost(<a href="http://sourceforge.net/projects/boost/files/boost/1.41.0/" target="_blank">http://sourceforge.net/projects/boost/files/boost/1.41.0/</a>),</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">注意选择</span><span lang="EN-US"><font face="Calibri">linux</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">环境下的</span><span lang="EN-US"><font face="Calibri">bz2</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">包。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="186" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/6.JPG" width="501" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step2:</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">将下载的</span><span lang="EN-US"><font face="Calibri">boost_1_41_0.tar.bz2</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">包放到你安装</span><span lang="EN-US"><font face="Calibri">cygwin</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的主文件夹下。本例中即为</span><span lang="EN-US"><font face="Calibri">D:\cygwin\home\mypcname.</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">打开</span><span lang="EN-US"><font face="Calibri">cygwin</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的</span><span lang="EN-US"><font face="Calibri">shell</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，在</span><span lang="EN-US"><font face="Calibri">shell</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">命令行运行下</span><span lang="EN-US"><font face="Calibri">ls</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，查看下安装包是否在当前目录下，如果不在，则</span><span lang="EN-US"><font face="Calibri">cd</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">到其所在的目录下。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step3:</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">运行</span><span lang="EN-US" style="border-right: windowtext 1pt solid; padding-right: 0cm; border-top: windowtext 1pt solid; padding-left: 0cm; padding-bottom: 0cm; border-left: windowtext 1pt solid; padding-top: 0cm; border-bottom: windowtext 1pt solid; mso-border-alt: solid windowtext .5pt"><font face="Calibri">tar --bzip2 -xf boost_1_41_0.tar.bz2</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">解压，需要几分钟时间，等候片刻。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">运行</span><span lang="EN-US" style="border-right: windowtext 1pt solid; padding-right: 0cm; border-top: windowtext 1pt solid; padding-left: 0cm; padding-bottom: 0cm; border-left: windowtext 1pt solid; padding-top: 0cm; border-bottom: windowtext 1pt solid; mso-border-alt: solid windowtext .5pt"><font face="Calibri">cd <em><span style="mso-spacerun: yes">&nbsp;</span></em>boost_1_41_0</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，到解压后的文件下</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">运行</span><font face="Calibri"><span lang="EN-US" style="border-right: windowtext 1pt solid; padding-right: 0cm; border-top: windowtext 1pt solid; padding-left: 0cm; padding-bottom: 0cm; border-left: windowtext 1pt solid; padding-top: 0cm; border-bottom: windowtext 1pt solid; mso-border-alt: solid windowtext .5pt">./bootstrap.sh --prefix=/usr/local</span><span lang="EN-US">,</span></font><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">该命令的作用是利用</span><span lang="EN-US"><font face="Calibri">prefix</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">参数，讲</span><span lang="EN-US"><font face="Calibri">boost</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的</span><span lang="EN-US"><font face="Calibri">lib</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">和</span><span lang="EN-US"><font face="Calibri">include</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">安装到</span><span lang="EN-US"><font face="Calibri">/usr/local/lib</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">和</span><span lang="EN-US"><font face="Calibri">/usr/local/include</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">下。同时，你也可以自己选择安装的位置</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">运行</span><font face="Calibri"><span lang="EN-US" style="border-right: windowtext 1pt solid; padding-right: 0cm; border-top: windowtext 1pt solid; padding-left: 0cm; padding-bottom: 0cm; border-left: windowtext 1pt solid; padding-top: 0cm; border-bottom: windowtext 1pt solid; mso-border-alt: solid windowtext .5pt">./bjam install</span><span lang="EN-US">,</span></font><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">开始安装，需要时间较长，最后会有若干</span><span lang="EN-US"><font face="Calibri">error,</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">我不知道如何解决，似乎可以忽略。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">最后可以观察到</span><span lang="EN-US"><font face="Calibri">/usr/local/lib</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">和</span><span lang="EN-US"><font face="Calibri">/usr/local/include</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">下有很多文件创建。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: -18pt; mso-char-indent-count: 0; mso-list: l0 level1 lfo1"><span lang="EN-US" style="mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: Calibri; mso-bidi-theme-font: minor-latin"><span style="mso-list: Ignore"><font face="Calibri">3.</font><span style="font: 7pt &#39;Times New Roman&#39;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">安装</span><span lang="EN-US"><font face="Calibri">Eclipse</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">下载</span><span lang="EN-US"><font face="Calibri">Eclipse for C++(</font><a href="http://www.eclipse.org/downloads/" target="_blank"><font face="Calibri" color="#800080">http://www.eclipse.org/downloads/</font></a><font face="Calibri">)</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><img height="89" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/7.JPG" width="450" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">解压后，启动</span><span lang="EN-US"><font face="Calibri">Eclipse</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，发现</span><span lang="EN-US"><font face="Calibri">IDE</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">已经寻找到</span><span lang="EN-US"><font face="Calibri">C&amp;C++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的编译器</span><span lang="EN-US"><font face="Calibri">GCC</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">和</span><span lang="EN-US"><font face="Calibri">G++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的安装路径。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">在</span><span lang="EN-US"><font face="Calibri">Eclipse</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">菜单中选择</span><span lang="EN-US"><font face="Calibri">window</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，选择</span><span lang="EN-US"><font face="Calibri">Perferences, </font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">在</span><span lang="EN-US"><font face="Calibri">Makefile Project</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">中的</span><span lang="EN-US"><font face="Calibri">Binary Parsers</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">选择</span><span lang="EN-US"><font face="Calibri">Cygwin PE Parser</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="309" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/8.JPG" width="522" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: -18pt; mso-char-indent-count: 0; mso-list: l0 level1 lfo1"><span lang="EN-US" style="mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: Calibri; mso-bidi-theme-font: minor-latin"><span style="mso-list: Ignore"><font face="Calibri">4.</font><span style="font: 7pt &#39;Times New Roman&#39;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">配置</span><span lang="EN-US"><font face="Calibri">Eclipse+boost</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的开发环境</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">新建一个</span><span lang="EN-US"><font face="Calibri">C++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">工程，复制下列代码到</span><span lang="EN-US"><font face="Calibri">CPP</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">中。</span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">#include</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><span lang="EN-US" style="font-size: 10pt; color: #2a00ff; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">&lt;iostream&gt;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">#include</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><span lang="EN-US" style="font-size: 10pt; color: #2a00ff; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">&lt;string&gt;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">#include</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><span lang="EN-US" style="font-size: 10pt; color: #2a00ff; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">&lt;boost/regex.hpp&gt;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">using</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">namespace</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> std;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">using</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">namespace</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> boost;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">int</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> <strong>main</strong>() {</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span></span><span lang="EN-US" style="font-size: 10pt; color: #005032; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">string</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> s = </span><span lang="EN-US" style="font-size: 10pt; color: #2a00ff; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">"This is my simple sample text, really."</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span></span><span lang="EN-US" style="font-size: 10pt; color: #005032; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">regex</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> re(</span><span lang="EN-US" style="font-size: 10pt; color: #2a00ff; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">",|:|-|\\s+"</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">);</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span></span><span lang="EN-US" style="font-size: 10pt; color: #005032; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">sregex_token_iterator</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> my_iter(s.begin( ), s.end( ), re, -1);</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span></span><span lang="EN-US" style="font-size: 10pt; color: #005032; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">sregex_token_iterator</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> my_end;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span></span><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">while</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> (my_iter </span><span lang="EN-US" style="font-size: 10pt; color: #c86400; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">!=</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> my_end)</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>cout </span><span lang="EN-US" style="font-size: 10pt; color: #c86400; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">&lt;&lt;</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><span lang="EN-US" style="font-size: 10pt; color: #c86400; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">*</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">my_iter</span><span lang="EN-US" style="font-size: 10pt; color: #c86400; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">++</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><span lang="EN-US" style="font-size: 10pt; color: #c86400; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">&lt;&lt;</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> </span><span lang="EN-US" style="font-size: 10pt; color: #2a00ff; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">'\n'</span><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">;</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left; mso-layout-grid-align: none" align="left"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span></span><strong><span lang="EN-US" style="font-size: 10pt; color: #7f0055; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">return</span></strong><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"> (1);</span><span lang="EN-US" style="font-size: 10pt; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p></o:p></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt">}<o:p></o:p></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="font-size: 10pt; color: black; font-family: &#39;Courier New&#39;; mso-font-kerning: 0pt"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step1:</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">点该工程的右键，打开工程的</span><span lang="EN-US"><font face="Calibri">Properties</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">。打开其</span><span lang="EN-US"><font face="Calibri">C/C++ Build</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的</span><span lang="EN-US"><font face="Calibri">Settings</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">选项。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="284" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/9.JPG" width="558" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step2:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">配置</span><span lang="EN-US"><font face="Calibri">Cygwin C++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">编译器</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">添加第一步安装的</span><span lang="EN-US"><font face="Calibri">boost</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">所在的目录到</span><span lang="EN-US"><font face="Calibri">Directories</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">中。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="92" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/10.JPG" width="500" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step3:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">配置</span><span lang="EN-US"><font face="Calibri">Cygwin C++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">连接器</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">添加工程代码所用到的</span><span lang="EN-US"><font face="Calibri">lib</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，本示例代码只用到两个</span><span lang="EN-US"><font face="Calibri">lib</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，根据你使用</span><span lang="EN-US"><font face="Calibri">boost</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">库的不同添加删除。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">还要强调下，不能使用</span><span lang="EN-US"><font face="Calibri">windows</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">的目录，会出现</span><span lang="EN-US"><font face="Calibri">make</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">错误，一个</span><span lang="EN-US"><font face="Calibri">Bug</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">，但是在</span><span lang="EN-US"><font face="Calibri">make3.8</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">中没有。例如将</span><span lang="EN-US"><font face="Calibri">D:\cygwin\usr\*</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">改成</span><span lang="EN-US"><font face="Calibri">\cygdrive\d\cygwin\usr\*</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">。</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin"><img height="184" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/11.JPG" width="557" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">5 </font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">测试代码</span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step1:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">点击小锤子，为代码</span><span lang="EN-US"><font face="Calibri">build</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">二进制</span><span lang="EN-US"><font face="Calibri">(</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">其实就是利用</span><span lang="EN-US"><font face="Calibri">g++</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">和</span><span lang="EN-US"><font face="Calibri">IDE</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">产生的</span><span lang="EN-US"><font face="Calibri">Makefile</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">文件，</span><span lang="EN-US"><font face="Calibri">make</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">工程</span><span lang="EN-US"><font face="Calibri">)</font></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><img height="107" alt="" src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/12.JPG" width="270" border="0"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US" style="mso-no-proof: yes"></span></p>
+<p class="MsoListParagraph" style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm; mso-char-indent-count: 0"><span lang="EN-US"><font face="Calibri">Step:</font></span><span style="font-family: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">执行，查看结果。</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/smartvessel/category/220340.html">Boost</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(1610508,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/SmartVessel" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/smartvessel/" target="_blank"><img src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/smartvessel/">SmartVessel</a><br>
+<a href="http://home.cnblogs.com/u/smartvessel/followees">关注 - 2</a><br>
+<a href="http://home.cnblogs.com/u/smartvessel/followers">粉丝 - 7</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(1610508,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+	<div class="buryit" onclick="votePost(1610508,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/smartvessel/archive/2009/10/16/1584576.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/smartvessel/archive/2009/10/16/1584576.html" title="发布于2009-10-16 15:46">GNU Make(二)</a><br><a href="http://www.cnblogs.com/smartvessel/archive/2009/11/25/1610554.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/smartvessel/archive/2009/11/25/1610554.html" title="发布于2009-11-25 15:06">Using Boost C++ libraries with gcc g++ under Windows(cygwin+netbeans)</a><br></div>
+</div>
+
+
+	</div>
+	
+	<div class="postfoot">
+		posted on <span id="post-date">2009-11-25 15:00</span> <a href="http://www.cnblogs.com/smartvessel/">SmartVessel</a> 阅读(<span id="post_view_count">2801</span>) 评论(<span id="post_comment_count">0</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=1610508" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/smartvessel/archive/2009/11/25/1610508.html#" onclick="AddToWz(1610508);return false;">收藏</a>
+	</div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=58194,cb_entryId=1610508,cb_blogApp=currentBlogApp,cb_blogUserGuid='1a42c45b-d069-de11-9510-001cf0cd104b',cb_entryCreatedDate='2009/11/25 15:00:00';loadViewCount(cb_entryId);</script>
+
+<a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/smartvessel/archive/2009/11/25/1610508.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/smartvessel/archive/2009/11/25/1610508.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.imooc.com/view/137?from=cnblogs" target="_blank"><b>【免费课程】案例：WEB调试工具---Firebug</b></a><br><a href="http://zt.cnblogs.com/tingyun/" target="_blank">听云APP性能监测——终结移动App性能黑洞</a><br><a href="http://oneapm.com/events/ironman.html?hmsr=%E5%8D%9A%E5%AE%A2%E5%9B%AD&hmmd=%E6%96%87%E7%AB%A0%E5%86%85%E9%A1%B5%E6%96%87%E5%AD%97%E9%93%BE&hmpl=&hmkw=&hmci=" target="_blank">100%有礼！机械键盘、钢铁侠T恤免费拿！OneAPM送福利！</a><br><a href="http://www.rongcloud.cn/promotion/" target="_blank">融云，免费为你的App加入IM功能——让你的App“聊”起来！！</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type="text/javascript">
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px; ">
+    <script type="text/javascript">
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none; "><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom; " src="javascript:"<html><body style='background:transparent'></body></html>""></iframe></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none; " src="javascript:"<html><body style='background:transparent'></body></html>""></iframe></div>
+</div>
+</div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/505261/" target="_blank">CM推出Android One手机ROM，挺进廉价智能手机市场</a><br> ·  <a href="http://news.cnblogs.com/n/505260/" target="_blank">多方消息确认：MX4 Pro 推迟发布</a><br> ·  <a href="http://news.cnblogs.com/n/505259/" target="_blank">12.9寸iPad Pro更多内幕：竟然双系统！</a><br> ·  <a href="http://news.cnblogs.com/n/505258/" target="_blank">“快递小哥”纽约敲钟记 亲身见证阿里上市</a><br> ·  <a href="http://news.cnblogs.com/n/505257/" target="_blank">搜房5100万投资21世纪不动产</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id="div-gpt-ad-1410860226396-0" style="width: 468px; height: 60px; ">
+<script type="text/javascript">
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+<div id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0__container__" style="border: 0pt none; "><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom; " src="javascript:"<html><body style='background:transparent'></body></html>""></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/505226/" target="_blank">乔布斯的管理课</a><br> ·  <a href="http://kb.cnblogs.com/page/193562/" target="_blank">一切皆可复用</a><br> ·  <a href="http://kb.cnblogs.com/page/192086/" target="_blank">微软资深软件工程师：阅读代码真的很难</a><br> ·  <a href="http://kb.cnblogs.com/page/505105/" target="_blank">应聘互联网公司的简历应该是怎么样的？</a><br> ·  <a href="http://kb.cnblogs.com/page/505062/" target="_blank">隐藏为了适时出现</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script><iframe src="./windows下boost开发环境简易教程(cygwin+eclipse) - SmartVessel - 博客园_files/container.htm" style="visibility: hidden; display: none; "></iframe>
+</div>
+
+</div>
+
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br>
+	Copyright © SmartVessel
+</p>
+
+
+
+<iframe id="google_osd_static_frame_4654965521767" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px; "></iframe></body></html>

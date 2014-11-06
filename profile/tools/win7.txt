@@ -1,0 +1,20 @@
+Remove the Registry Hack Way
+
+Open up regedit.exe through the start menu search or run box, and then browse down to the following key:
+
+
+HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\ACE
+
+image
+
+Double-click on the (Default) value in the right-hand side, and then add some dashes in front of the value to disable it. You should be able to right-click on the desktop and see that the item is removed.
+
+If you would prefer, you can simply get rid of this key, but I would do right-click / export the key out to a file for backup purposes before deleting it.
+
+Completely Disable the Shell Extension
+
+If you don¡¯t want that shell extension loading at all, you can use the awesome Nirsoft ShellExView application to just completely disable the extension and prevent it from running.
+
+Note: make sure to launch ShellExView by right-clicking and choosing Run as Administrator if you are using Vista. This doesn¡¯t seem to work for Windows 7, but the registry hack above will work perfectly fine.
+
+Find the ¡°SimpleShlExt Class¡± item with the description ¡°ACE Context Menu¡± in the list, and click the Disable button.
