@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "engine0", "engine0.vcxproj"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "engine1", "..\engine1\engine1.vcxproj", "{73BCFE3F-EC1F-4E93-8CAA-ACFBBC2FB8BF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ilua", "..\ilua\ilua.vcxproj", "{278AF1E7-B886-4432-8918-39C050A507E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{73BCFE3F-EC1F-4E93-8CAA-ACFBBC2FB8BF}.Debug|Win32.Build.0 = Debug|Win32
 		{73BCFE3F-EC1F-4E93-8CAA-ACFBBC2FB8BF}.Release|Win32.ActiveCfg = Release|Win32
 		{73BCFE3F-EC1F-4E93-8CAA-ACFBBC2FB8BF}.Release|Win32.Build.0 = Release|Win32
+		{278AF1E7-B886-4432-8918-39C050A507E0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{278AF1E7-B886-4432-8918-39C050A507E0}.Debug|Win32.Build.0 = Debug|Win32
+		{278AF1E7-B886-4432-8918-39C050A507E0}.Release|Win32.ActiveCfg = Release|Win32
+		{278AF1E7-B886-4432-8918-39C050A507E0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
