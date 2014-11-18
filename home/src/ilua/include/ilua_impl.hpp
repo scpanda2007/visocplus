@@ -33,6 +33,39 @@ struct ilua_impl{
 
 	static void call_func_iteral(int args...){}
 
+	template<class R, bool b = (bool)std::is_void<void>::value >
+	struct call_lua_selector{
+		template<class ...Args>
+		R call_lua(const char* func_name, Args... args){
+			lua_getglobal(state(), func_name);
+			ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(args)...);
+			lua_pcall(state(), sizeof...(args), 1, 0);
+		}
+	};
+
+	template<class R>
+	struct call_lua_selector<R, (bool)std::is_void<int>::value>{
+		template<class ...Args>
+		R call_lua(const char* func_name, Args... args){
+			lua_getglobal(state(), func_name);
+			ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(args)...);
+			lua_pcall(state(), sizeof...(args), 1, 0);
+			ilua_to_impl to_impl(l, -1);
+			R result = to_impl.to<R>();
+			lua_pop(L, 1);
+			return result;
+		}
+	};
+
+	template<class R, class ...Args>
+	static R call_luafunc(const char* func_name, Args... args){
+		lua_getglobal(state(), "lua_add");
+		ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(args)...);
+		lua_pcall(state(), sizeof...(args), 1, 0);  
+		int result = lua_tointeger(L, -1); 
+		lua_pop(L, 1); 
+	}
+
 	template<class R, class ...Args>
 	static void register_func(const char * func_name, R(*func)(Args...)){
 		
@@ -60,8 +93,7 @@ private:
 		template<class ...Args>
 		static int call(void* userdata, Args... args){
 			typedef R(*func_ptr)(Args...);
-			func_ptr* convert_func = (func_ptr*)userdata;
-			(*convert_func)(args...);
+			(*(func_ptr*)userdata)(args...);
 			return 0;
 		}
 	};
@@ -72,8 +104,7 @@ private:
 		template<class ...Args>
 		static int call(void* userdata, Args... args){
 			typedef R(*func_ptr)(Args...);
-			func_ptr* convert_func = (func_ptr*)userdata;
-			ilua_push_impl::push((*convert_func)(args...));
+			ilua_push_impl::push((*(func_ptr*)userdata)(args...));
 			return 1;
 		}
 	};
