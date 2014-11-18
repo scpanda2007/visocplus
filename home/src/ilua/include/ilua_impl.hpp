@@ -5,90 +5,127 @@ extern "C"{
 #include "lualib.h"
 #include "lauxlib.h"
 }
+#include <functional>
 
-struct _assert{
-	static void check(bool value){
-		_assert::check(value, "check failed.");
+struct ilua_state{
+public:
+	lua_State *l;
+	void set(lua_State *l_){
+		l = l_;
 	}
-	template<class ...Args>
-	static void check(bool value,const char* fmt, Args ...args){
-		if (!value)printf(fmt, args);
-		//TODO:抛出一个异常
+	lua_State * state(){
+		return l;
 	}
 };
 
 struct ilua_impl{
-	static lua_State *L;
+
 	static void open(){
-		L = lua_open();
-		luaopen_base(L);
-		luaL_openlibs(L);
+		set_state(lua_open());
+		luaL_openlibs(state());
 	}
-
 	static void close(){
-		lua_close(L);
+		lua_close(state());
+	}
+	static void dofile(const char* file_pathe){
+		luaL_dofile(state(), file_pathe);
 	}
 
-	/*
-	* 调用 lua 函数，
-	* TODO:具体的返回值尚未处理,当前假定为 int 类型
-	*/
-	template<class ...Args>
-	static int call_function(const char* method_name, Args&& ...args){
-		lua_getglobal(L, method_name);
-		ilua_impl::push_args(args...);
-		lua_call(L, sizeof...(args), 1);
-		int sum = (int)lua_tonumber(L, -1);
-		lua_pop(L, 1);
-		return sum;
-	}
-
-	template<class ...Args>
-	static void push_args(Args... args){
-		ilua_impl::__push_args(ilua_impl::push(args)...);
-	}
-	static void __push_args(int args...){}
-
-	template<class Arg>
-	static int push(Arg&& arg){
-		return 0/0;
-	}
-	template<>
-	static int push(int&& arg){
-		lua_pushnumber(L, arg);
-	}
+	static void call_func_iteral(int args...){}
 
 	template<class R, class ...Args>
-	static int register_function(const char* func_name, R(*func)(Args...)){
+	static void register_func(const char * func_name, R(*func)(Args...)){
+		
+		typedef R(*func_ptr)(Args...);
+		
+		void *userdata = lua_newuserdata(state(), sizeof(func_ptr));
+		new(userdata)func_ptr(func);
 
+		lua_pushcclosure(state(), 
+			[](lua_State *l)->int{
+				void* userdata = lua_touserdata(l, lua_upvalueindex(1));
+				ilua_to_impl to_impl(l, 1);
+				return func_selector<R, std::is_void<void>::value >::call(userdata, to_impl.to<Args>()...);
+		}, 1);
+
+		lua_setglobal(state(), func_name);
 	}
 
-	template<class R, class ...Args>
-	static int __convert_lua_function(const char* func_name, R(*func)(Args...)){
-		_assert::check(lua_gettop(L) == sizeof...(Args),"出入参数数量不匹配：%s",func_name);
-		to t(1);
-		R result = func(t.to_value<Args>()...);
-		ilua_impl::push(result);
-		return 1;
-	}
+private:
+	/////////////////////// call_function for register  //////////////////////////////
 
-	/*
-	* 顺序从某个index依次取值
-	*/
-	struct to{
-	private:
-		int counter;
-		template<class R>
-		R&& to_value(){}
-		to(){}
-		to(const to&){}
-		to(const to&&){}
+	template<class R, bool b = (bool)std::is_void<void>::value >
+	struct func_selector{
 	public:
-		to(int counter_):counter(counter_-1){}
-		template<>
-		int&& to_value(){
-			return lua_tointeger(L,counter++);
+		template<class ...Args>
+		static int call(void* userdata, Args... args){
+			typedef R(*func_ptr)(Args...);
+			func_ptr* convert_func = (func_ptr*)userdata;
+			(*convert_func)(args...);
+			return 0;
 		}
-
 	};
+
+	template<class R>
+	struct func_selector<R, (bool)std::is_void<int>::value >{
+	public:
+		template<class ...Args>
+		static int call(void* userdata, Args... args){
+			typedef R(*func_ptr)(Args...);
+			func_ptr* convert_func = (func_ptr*)userdata;
+			ilua_push_impl::push((*convert_func)(args...));
+			return 1;
+		}
+	};
+
+
+	template<class R, class ...Args>
+	static int closure_func(lua_State *l){
+		void* userdata = lua_touserdata(l, lua_upvalueindex(1));
+		ilua_to_impl to_impl(l, 1);
+		return func_selector<R, std::is_void<void>::value >::call(userdata, to_impl.to<Args>()...);
+	}
+
+	/////////////////////// to value //////////////////////////////
+	struct ilua_to_impl{
+	private:
+		ilua_to_impl(){}
+		ilua_to_impl(const ilua_to_impl &){}
+		ilua_to_impl(const ilua_to_impl &&){}
+	public:
+		lua_State *l;
+		int counter;
+		ilua_to_impl(lua_State* l_, int counter_) :l(l_),counter(counter_-1){}
+		
+		template<class R>	
+		R to(){}
+
+		template<>
+		int to(){ return lua_tointeger(l,counter++);}
+	};
+
+	/////////////////////// push value //////////////////////////////
+	struct ilua_push_impl{
+		template<class Arg>
+		static int push(Arg){}
+		
+		template<>
+		static int push(int arg){ lua_pushinteger(state(), arg); return 1; }
+	};
+
+	///////////////////// lua_State //////////////////////////////
+	static ilua_state* impl_state(){
+		static ilua_state* sts = new ilua_state();
+		return sts;
+	}
+	static lua_State *state(){
+		return impl_state()->state();
+	}
+	static void set_state(lua_State *l){
+		impl_state()->set(l);
+	}
+
 };
+
+
+

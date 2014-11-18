@@ -25,10 +25,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\ilua\include\ilua.hpp">
+    <ClInclude Include="..\..\src\ilua\include\ilua_impl.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ilua\include\ilua_impl.hpp">
+    <ClInclude Include="..\..\src\ilua\include\ilua.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
