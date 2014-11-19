@@ -142,17 +142,13 @@ private:
 	/////////////////////// push value //////////////////////////////
 	struct ilua_push_impl{
 		template<class Arg>
-		static int push(Arg ){}
+		static int push(Arg&& ){}
 		
 		//TODO 下面几个明显是做成一个
 		template<>
-		static int push(int arg){ lua_pushinteger(state(), arg); return 1; }
-		template<>
-		static int push(const int& arg){ lua_pushinteger(state(), arg); return 1; }
-		template<>
 		static int push(int& arg){ lua_pushinteger(state(), arg); return 1; }
 		template<>
-		static int push(int&& arg){ lua_pushinteger(state(), arg); return 1; }
+		static int push(int const& arg){ lua_pushinteger(state(), arg); return 1; }
 	};
 
 	///////////////////// lua_State //////////////////////////////
