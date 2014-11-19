@@ -6,7 +6,11 @@ extern "C"{
 #include "lauxlib.h"
 }
 #include <functional>
+#include <utility>
 
+/*
+** TODO: 完善类型操作（主要是number的问题），完成table数据的创建
+*/
 struct ilua_state{
 public:
 	lua_State *l;
@@ -18,6 +22,9 @@ public:
 	}
 };
 
+/*
+** 之所以要费心思做 右值引用 主要是为后面要用的 table 做免重复拷贝做准备
+*/
 struct ilua_impl{
 
 	static void open(){
@@ -36,9 +43,9 @@ struct ilua_impl{
 	template<class R, bool b = (bool)std::is_void<void>::value >
 	struct call_lua_selector{
 		template<class ...Args>
-		R call_lua(const char* func_name, Args... args){
+		static R call_lua(const char* func_name, Args&& ...args){
 			lua_getglobal(state(), func_name);
-			ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(args)...);
+			ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 		}
 	};
@@ -46,24 +53,20 @@ struct ilua_impl{
 	template<class R>
 	struct call_lua_selector<R, (bool)std::is_void<int>::value>{
 		template<class ...Args>
-		R call_lua(const char* func_name, Args... args){
+		static R&& call_lua(const char* func_name, Args&& ...args){
 			lua_getglobal(state(), func_name);
-			ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(args)...);
+			ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
-			ilua_to_impl to_impl(l, -1);
+			ilua_to_impl to_impl(state(), -1);
 			R result = to_impl.to<R>();
-			lua_pop(L, 1);
-			return result;
+			lua_pop(state(), 1);
+			return std::forward<R>(result);
 		}
 	};
 
 	template<class R, class ...Args>
-	static R call_luafunc(const char* func_name, Args... args){
-		lua_getglobal(state(), "lua_add");
-		ilua_impl::call_func_iteral(ilua_push_impl::push<Args>(args)...);
-		lua_pcall(state(), sizeof...(args), 1, 0);  
-		int result = lua_tointeger(L, -1); 
-		lua_pop(L, 1); 
+	static R&& call_luafunc(const char* func_name, Args&& ... args){
+		return 	call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name, std::forward<Args>(args)...);
 	}
 
 	template<class R, class ...Args>
@@ -91,7 +94,7 @@ private:
 	struct func_selector{
 	public:
 		template<class ...Args>
-		static int call(void* userdata, Args... args){
+		static int call(void* userdata, Args ...args){
 			typedef R(*func_ptr)(Args...);
 			(*(func_ptr*)userdata)(args...);
 			return 0;
@@ -102,7 +105,7 @@ private:
 	struct func_selector<R, (bool)std::is_void<int>::value >{
 	public:
 		template<class ...Args>
-		static int call(void* userdata, Args... args){
+		static int call(void* userdata, Args ...args){
 			typedef R(*func_ptr)(Args...);
 			ilua_push_impl::push((*(func_ptr*)userdata)(args...));
 			return 1;
@@ -129,19 +132,27 @@ private:
 		ilua_to_impl(lua_State* l_, int counter_) :l(l_),counter(counter_){}
 		
 		template<class R>	
-		R to(){}
+		R&& to(){}
 
 		template<>
-		int to(){ return lua_tointeger(l,counter++);}
+		int&& to(){ return lua_tointeger(l,counter++);}
+
 	};
 
 	/////////////////////// push value //////////////////////////////
 	struct ilua_push_impl{
 		template<class Arg>
-		static int push(Arg){}
+		static int push(Arg ){}
 		
+		//TODO 下面几个明显是做成一个
 		template<>
 		static int push(int arg){ lua_pushinteger(state(), arg); return 1; }
+		template<>
+		static int push(const int& arg){ lua_pushinteger(state(), arg); return 1; }
+		template<>
+		static int push(int& arg){ lua_pushinteger(state(), arg); return 1; }
+		template<>
+		static int push(int&& arg){ lua_pushinteger(state(), arg); return 1; }
 	};
 
 	///////////////////// lua_State //////////////////////////////
