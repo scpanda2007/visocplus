@@ -10,16 +10,15 @@ int test(lua_State *l){
 }
 
 int test2(int a, int b, int c){
-	printf("%d-%d-%d",a,b,c);
+	printf("%d-%d-%d ",a,b,c);
 	return a + b + c;
 }
 
 static void test3(int a, int b, int c){
-	printf("%d=%d=%d", a, b, c);
+	printf("%d=%d=%d ", a, b, c);
 }
 
 int main(int argc, char* argv[]){
-	std::cout << std::is_void <void>::value ;
 	//*/
 	ilua::open();
 	ilua::register_func("test",test2);

@@ -78,7 +78,7 @@ struct ilua_impl{
 			[](lua_State *l)->int{
 				void* userdata = lua_touserdata(l, lua_upvalueindex(1));
 				ilua_to_impl to_impl(l, 1);
-				return func_selector<R, std::is_void<void>::value >::call(userdata, to_impl.to<Args>()...);
+				return func_selector<R, std::is_void<R>::value >::call(userdata, to_impl.to<Args>()...);
 		}, 1);
 
 		lua_setglobal(state(), func_name);
@@ -126,7 +126,7 @@ private:
 	public:
 		lua_State *l;
 		int counter;
-		ilua_to_impl(lua_State* l_, int counter_) :l(l_),counter(counter_-1){}
+		ilua_to_impl(lua_State* l_, int counter_) :l(l_),counter(counter_){}
 		
 		template<class R>	
 		R to(){}
