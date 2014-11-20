@@ -7,6 +7,7 @@ extern "C"{
 }
 #include <functional>
 #include <utility>
+#include <type_traits>
 
 /*
 ** TODO: 完善类型操作（主要是number的问题），完成table数据的创建
@@ -45,7 +46,7 @@ struct ilua_impl{
 		template<class ...Args>
 		static R call_lua(const char* func_name, Args&& ...args){
 			lua_getglobal(state(), func_name);
-			ilua_impl::call_func_iteral(ilua_push_impl<Args>::push(std::forward<Args>(args))...);
+			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 		}
 	};
@@ -55,7 +56,7 @@ struct ilua_impl{
 		template<class ...Args>
 		static R&& call_lua(const char* func_name, Args&& ...args){
 			lua_getglobal(state(), func_name);
-			ilua_impl::call_func_iteral(ilua_push_impl2<Args, int>::push(std::forward<Args>(args))...);
+			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 			ilua_to_impl to_impl(state(), -1);
 			R result = to_impl.to<R>();
@@ -142,32 +143,9 @@ private:
 	/////////////////////// push value //////////////////////////////	
 	struct ilua_push_impl{
 		template<class Arg>
-		static int push(Arg arg){}
-
-		//template<class Arg>
-		//static int push(Arg arg){
-		//	Traits<Arg >::push_function(arg);
-		//	return 0;
-		//}
-		
-		//TODO 下面几个明显是做成一个
-		template<>
-		static int push(int arg){ lua_pushinteger(state(), arg); return 1; }
-		template<>
-		static int push(int& arg){ lua_pushinteger(state(), arg); return 1; }
-		template<>
-		static int push(int const& arg){ lua_pushinteger(state(), arg); return 1; }
-	};
-
-	template<class Arg, class Enable = void>
-	struct ilua_push_impl2{
-		static int push(Arg arg){}
-	};
-
-	//TODO 只是试了下这个方法十分可以解决 ilua_push_impl 里需要写多个适配的问题
-	template<class Arg>
-	struct ilua_push_impl2<Arg,int>{
-		static int push(Arg arg){ lua_pushinteger(state(), arg); return 1; }
+		static int push(Arg arg, typename std::enable_if<std::is_integral<Arg>::value >::type* = 0){ 
+			lua_pushinteger(state(), arg); return 1;
+		}
 	};
 
 	///////////////////// lua_State //////////////////////////////
