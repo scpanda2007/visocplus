@@ -163,7 +163,7 @@ private:
 		//char *
 		template<class Arg>
 		static int push(Arg arg, typename std::enable_if<std::is_pointer<Arg>::value >::type* = 0){
-			lua_pushlstring(state(), arg); return 1;
+			lua_pushstring(state(), arg); return 1;
 		}
 	};
 
