@@ -10,7 +10,7 @@ extern "C"{
 #include <type_traits>
 
 /*
-** TODO: 完善类型操作（主要是number的问题），完成table数据的创建
+** TODO: 完成table数据的创建
 */
 struct ilua_state{
 public:
@@ -131,20 +131,39 @@ private:
 		lua_State *l;
 		int counter;
 		ilua_to_impl(lua_State* l_, int counter_) :l(l_),counter(counter_){}
-		
-		template<class R>	
-		R&& to(){}
 
-		template<>
-		int&& to(){ return lua_tointeger(l,counter++);}
+		//int , char, short, bool 都走这里
+		template<class R>
+		R&& to(typename std::enable_if<std::is_integral<R>::value >::type* cond = 0){ return lua_tointeger(l, counter++); }
 
+		//小数
+		template<class R>
+		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ return lua_tonumber(l, counter++); }
+	
+		//std::string
+		template<class R>
+		R&& to(typename std::enable_if<std::is_same<std::remove_cv<R>,std::string>::value >::type* cond = 0){ return std::string(lua_tostring(l, counter++)); }
 	};
 
 	/////////////////////// push value //////////////////////////////	
 	struct ilua_push_impl{
+
+		//int , char, short, bool 都走这里
 		template<class Arg>
 		static int push(Arg arg, typename std::enable_if<std::is_integral<Arg>::value >::type* = 0){ 
 			lua_pushinteger(state(), arg); return 1;
+		}
+		
+		//小数
+		template<class Arg>
+		static int push(Arg arg, typename std::enable_if<std::is_floating_point<Arg>::value >::type* = 0){
+			lua_pushnumber(state(), arg); return 1;
+		}
+
+		//char *
+		template<class Arg>
+		static int push(Arg arg, typename std::enable_if<std::is_pointer<Arg>::value >::type* = 0){
+			lua_pushlstring(state(), arg); return 1;
 		}
 	};
 
