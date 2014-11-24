@@ -88,7 +88,6 @@ struct ilua_impl{
 		lua_setglobal(state(), func_name);
 	}
 
-private:
 	/////////////////////// call_function for register  //////////////////////////////
 
 	template<class R, bool b = (bool)std::is_void<void>::value >
@@ -140,9 +139,9 @@ private:
 		template<class R>
 		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ return lua_tonumber(l, counter++); }
 	
-		//std::string
+		//const char* 可能是错的这里
 		template<class R>
-		R&& to(typename std::enable_if<std::is_same<std::remove_cv<R>,std::string>::value >::type* cond = 0){ return std::string(lua_tostring(l, counter++)); }
+		R&& to(typename std::enable_if<std::is_same<std::remove_cv<R>,char *>::value >::type* cond = 0){ return lua_tostring(l, counter++); }
 	};
 
 	/////////////////////// push value //////////////////////////////	

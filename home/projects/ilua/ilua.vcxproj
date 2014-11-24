@@ -90,6 +90,7 @@
     <None Include="..\..\src\ilua\src\test\add.lua" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\scr\ilua\src\include\ilua_table_impl.hpp" />
     <ClInclude Include="..\..\src\ilua\include\ilua.hpp" />
     <ClInclude Include="..\..\src\ilua\include\ilua_impl.hpp" />
   </ItemGroup>
