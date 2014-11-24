@@ -29,22 +29,22 @@ struct ilua_table_impl{
 		};
 	
 		template<class Arg>
-		ilua_table_item(Arg&& arg,std::enable_if<std::is_integral<Arg>::value >::type* cond = 0){
+		ilua_table_item(Arg&& arg,typename std::enable_if<std::is_integral<Arg>::value >::type* cond = 0){
 			setinteger(std::forward<Arg>(arg));
 		}
 
 		template<class Arg>
-		ilua_table_item(Arg&& arg, std::enable_if<std::is_floating_point<Arg>::value >::type* cond = 0){
+		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_floating_point<Arg>::value >::type* cond = 0){
 			setfloat(std::forward<Arg>(arg));
 		}
 
 		template<class Arg>
-		ilua_table_item(Arg&& arg, std::enable_if<std::is_pointer<Arg>::value >::type* cond = 0){
+		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_pointer<Arg>::value >::type* cond = 0){
 			set_char_array(std::forward<Arg>(arg));
 		}
 
 		template<class Arg>
-		ilua_table_item(Arg&& arg, std::enable_if<std::is_same<std::remove_cv<Arg>, ilua_table_impl>::value >::type* cond = 0){
+		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_same<std::remove_cv<Arg>, ilua_table_impl>::value >::type* cond = 0){
 			set_char_array(std::forward<Arg>(arg));
 		}
 
