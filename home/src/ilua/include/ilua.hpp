@@ -1,6 +1,10 @@
 #pragma once
 
 #include "ilua_impl.hpp"
+#include "ilua_table_impl.hpp"
+
+using ilua_table = ilua_table_impl;
+using ilua_item = ilua_table_impl::ilua_table_item;
 
 namespace ilua{
 	static void open(){
