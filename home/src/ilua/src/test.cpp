@@ -81,8 +81,9 @@ int main(int argc, char* argv[]){
 
 	printf("result test4 is .... %d\n", test4());
 
-	test_callfun::test_int();
+	//test_callfun::test_int();
 	test_callfun::test_float();
+	ilua_impl::call_luafunc<ilua_impl::table>("gettable", 0);
 	test_callfun::test_string();
 
 	ilua::close();

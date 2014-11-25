@@ -121,6 +121,10 @@ struct ilua_impl{
 		return func_selector<R, std::is_void<void>::value >::call(userdata, to_impl.to<Args>()...);
 	}
 
+	struct table{
+
+	};
+
 	/////////////////////// to value //////////////////////////////
 	struct ilua_to_impl{
 	private:
@@ -144,6 +148,20 @@ struct ilua_impl{
 		template<class R>
 		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){ return std::string(lua_tostring(l, counter++));}
 
+		//返回值如何实现零拷贝呢
+		template<class R>
+		R to(typename std::enable_if<std::is_same<R, table >::value >::type* cond = 0){ 
+			table t;
+			int type = lua_type(l, counter++);
+			int index = lua_gettop(l);
+			lua_pushnil(l);
+			while (lua_next(l, index)){
+				int value = lua_tointeger(l, -1);
+				lua_pop(l, 1);
+			}
+			return t;
+		}
+
 	};
 
 	/////////////////////// push value //////////////////////////////	
@@ -165,6 +183,7 @@ struct ilua_impl{
 		static int push(Arg arg, typename std::enable_if<std::is_same<Arg, std::string >::value >::type* = 0){
 			lua_pushstring(state(), arg.c_str()); return 1;
 		}
+
 
 	};
 
