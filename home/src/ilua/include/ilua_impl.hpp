@@ -54,19 +54,20 @@ struct ilua_impl{
 	template<class R>
 	struct call_lua_selector<R, (bool)std::is_void<int>::value>{
 		template<class ...Args>
-		static R&& call_lua(const char* func_name, Args&& ...args){
+		static R call_lua(const char* func_name, Args&& ...args){
 			lua_getglobal(state(), func_name);
 			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 			ilua_to_impl to_impl(state(), -1);
 			R result = to_impl.to<R>();
 			lua_pop(state(), 1);
-			return std::forward<R>(result);
+			return result;
 		}
 	};
 
+	//返回值如何实现零拷贝呢
 	template<class R, class ...Args>
-	static R&& call_luafunc(const char* func_name, Args&& ... args){
+	static R call_luafunc(const char* func_name, Args&& ... args){
 		return 	call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name, std::forward<Args>(args)...);
 	}
 
@@ -139,9 +140,10 @@ struct ilua_impl{
 		template<class R>
 		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ return lua_tonumber(l, counter++); }
 	
-		//const char* 可能是错的这里
+		//返回值如何实现零拷贝呢
 		template<class R>
-		R&& to(typename std::enable_if<std::is_same<std::remove_cv<R>,char *>::value >::type* cond = 0){ return lua_tostring(l, counter++); }
+		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){ return std::string(lua_tostring(l, counter++));}
+
 	};
 
 	/////////////////////// push value //////////////////////////////	
@@ -156,14 +158,14 @@ struct ilua_impl{
 		//小数
 		template<class Arg>
 		static int push(Arg arg, typename std::enable_if<std::is_floating_point<Arg>::value >::type* = 0){
-			lua_pushnumber(state(), arg); return 1;
+			lua_pushnumber(state(), (double)arg); return 1;
 		}
 
-		//char *
 		template<class Arg>
-		static int push(Arg arg, typename std::enable_if<std::is_pointer<Arg>::value >::type* = 0){
-			lua_pushstring(state(), arg); return 1;
+		static int push(Arg arg, typename std::enable_if<std::is_same<Arg, std::string >::value >::type* = 0){
+			lua_pushstring(state(), arg.c_str()); return 1;
 		}
+
 	};
 
 	///////////////////// lua_State //////////////////////////////

@@ -17,6 +17,11 @@ struct ilua_table_impl{
 	//TODO: 使用范型处理下不同数据，非基本类型还需仔细处理，这里只是先定一个框架
 	struct ilua_table_item
 	{
+		~ilua_table_item(){
+			if (type_ == data_type::char_array && data!=nullptr)delete data;
+			if (type_ == data_type::table && data != nullptr)delete table_ptr;
+		}
+
 		enum data_type{
 			null,interal,floatting,char_array,table
 		};
@@ -24,7 +29,7 @@ struct ilua_table_impl{
 		union {
 			int interal_number;
 			double floating_number;
-			const char *data;
+			std::string *data;
 			ilua_table_impl *table_ptr;
 		};
 	
@@ -39,15 +44,16 @@ struct ilua_table_impl{
 		}
 
 		template<class Arg>
-		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_pointer<Arg>::value >::type* cond = 0){
-			set_char_array(std::forward<Arg>(arg));
+		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_same<Arg,std::string>::value >::type* cond = 0){
+			setstring(&arg);
 		}
 
 		template<class Arg>
-		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_same<std::remove_cv<Arg>, ilua_table_impl>::value >::type* cond = 0){
-			set_char_array(std::forward<Arg>(arg));
+		ilua_table_item(Arg&& arg, typename std::enable_if<std::is_same<Arg, ilua_table_impl>::value >::type* cond = 0){
+			settable(&arg);
 		}
 
+	private:
 		void setinteger(int&& value){
 			type_ = data_type::interal;
 			interal_number = value;
@@ -63,16 +69,15 @@ struct ilua_table_impl{
 			floating_number = value;
 		}
 
-		/* 这里的char_array特指字符串!!!
-		**/
-		void set_char_array(const char* value){
+		//如果对外开放 那么进行更改时需要 考虑释放旧数据的问题
+		void setstring(std::string* data_){
 			type_ = data_type::char_array;
-			data = value;
+			data = data_;
 		}
 
-		void set_table(ilua_table_impl* value){
+		void settable(ilua_table_impl *table_ptr_){
 			type_ = data_type::table;
-			table_ptr = value;
+			table_ptr = table_ptr_;
 		}
 
 	};
@@ -99,11 +104,11 @@ struct ilua_table_impl{
 	**/
 	void push(){
 		ilua_impl::ilua_push_impl::push(data_.size());
-		for (int i = 0; i < data_.size(); i++){
+		for (int i = 0; i < (int)data_.size(); i++){
 			ilua_table_item &item_ = data_.at(i);
 			switch (item_.type_){
 			case ilua_table_item::data_type::char_array:
-				ilua_impl::ilua_push_impl::push(item_.data);; break;
+				ilua_impl::ilua_push_impl::push(*item_.data);; break;
 			case ilua_table_item::data_type::floatting:
 				ilua_impl::ilua_push_impl::push(item_.floating_number);; break;
 			case ilua_table_item::data_type::interal:

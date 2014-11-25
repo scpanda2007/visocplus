@@ -31,7 +31,47 @@ static int&& test4(){
 	return std::move(b);
 }
 
+namespace test_callfun{
+	void test_int(){
+		const int &&b = 1;
+		int &&c = 1;
+		int d = 1;
+		const int e = 1;
+		printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", b, b));
+		printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", c, b));
+		printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", d, b));
+		printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", 1, e));
+		printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", 1, 1));
+		//printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", &d, &e)); ÷∏’Îª·±®¥Ì
+	}
+
+	void test_float(){
+		const double &&b = 1.0f;
+		double &&c = 1.1f;
+		double d = 1.2f;
+		const double e = 1.3f;
+		printf("call lua function :: %f\n", ilua_impl::call_luafunc<double>("add", b, b));
+		printf("call lua function :: %f\n", ilua_impl::call_luafunc<double>("add", c, b));
+		printf("call lua function :: %f\n", ilua_impl::call_luafunc<double>("add", d, b));
+		printf("call lua function :: %f\n", ilua_impl::call_luafunc<double>("add", 1.4f, e));
+		printf("call lua function :: %f\n", ilua_impl::call_luafunc<double>("add", 1.5f, 1.6f));
+	}
+
+	void test_string(){
+		const std::string &&b = "10000";
+		std::string &&c = "20000";
+		std::string d = "30000";
+		const std::string e = "40000";
+		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", b, b).c_str());
+		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", c, b).c_str());
+		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", d, b).c_str());
+		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", std::string("50000"), e).c_str());
+		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", std::string("60000"), std::string("70000")).c_str());
+	}
+}
+
 int main(int argc, char* argv[]){
+
 	void_function2();
 	//*/
 	ilua::open();
@@ -41,15 +81,9 @@ int main(int argc, char* argv[]){
 
 	printf("result test4 is .... %d\n", test4());
 
-	const int &&b = 1;
-	int &&c = 1;
-	int d = 1;
-	const int e = 1;
-	printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", b, b));
-	printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", c, b));
-	printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", d, b));
-	printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", 1, e));
-	printf("call lua function :: %d\n", ilua_impl::call_luafunc<int>("add", 1, 1));
+	test_callfun::test_int();
+	test_callfun::test_float();
+	test_callfun::test_string();
 
 	ilua::close();
 	//*/
