@@ -92,7 +92,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\ilua\include\ilua.hpp" />
     <ClInclude Include="..\..\src\ilua\include\ilua_impl.hpp" />
-    <ClInclude Include="..\..\src\ilua\include\ilua_table_impl.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

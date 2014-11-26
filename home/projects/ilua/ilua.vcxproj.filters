@@ -31,8 +31,5 @@
     <ClInclude Include="..\..\src\ilua\include\ilua.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ilua\include\ilua_table_impl.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,6 +31,10 @@ static int&& test4(){
 	return std::move(b);
 }
 
+static void test5(ilua_impl::table t){
+	;//hehehe test get lua table arg
+}
+
 namespace test_callfun{
 	void test_int(){
 		const int &&b = 1;
@@ -77,14 +81,17 @@ int main(int argc, char* argv[]){
 	ilua::open();
 	ilua::register_func("test",test2);
 	ilua::register_func("test2", test3);
+	ilua::register_func("test4", test4);
+	ilua::register_func("test5", test5);
 	ilua::dofile("../../src/ilua/src/test/add.lua");
 
-	printf("result test4 is .... %d\n", test4());
+	//printf("result test4 is .... %d\n", test4());
 
 	//test_callfun::test_int();
-	test_callfun::test_float();
-	ilua_impl::call_luafunc<ilua_impl::table>("gettable", 0);
-	test_callfun::test_string();
+	//test_callfun::test_float();
+	//ilua_impl::call_luafunc<ilua_impl::table>("gettable", 0);
+	//ilua_impl::call_luafunc<ilua_impl::table>("gettable0", 0);
+	//test_callfun::test_string();
 
 	ilua::close();
 	//*/

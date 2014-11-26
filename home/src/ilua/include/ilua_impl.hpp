@@ -49,6 +49,11 @@ struct ilua_impl{
 			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 		}
+
+		static R call_lua(const char* func_name){
+			lua_getglobal(state(), func_name);
+			lua_pcall(state(), 0, 1, 0);
+		}
 	};
 
 	template<class R>
@@ -63,12 +68,26 @@ struct ilua_impl{
 			lua_pop(state(), 1);
 			return result;
 		}
+
+		static R call_lua(const char* func_name){
+			lua_getglobal(state(), func_name);
+			lua_pcall(state(), 0, 1, 0);
+			ilua_to_impl to_impl(state(), -1);
+			R result = to_impl.to<R>();
+			lua_pop(state(), 1);
+			return result;
+		}
 	};
 
 	//返回值如何实现零拷贝呢
 	template<class R, class ...Args>
 	static R call_luafunc(const char* func_name, Args&& ... args){
 		return 	call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name, std::forward<Args>(args)...);
+	}
+
+	template<class R>
+	static R call_luafunc(const char* func_name){
+		return 	call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name);
 	}
 
 	template<class R, class ...Args>
@@ -89,8 +108,27 @@ struct ilua_impl{
 		lua_setglobal(state(), func_name);
 	}
 
+	template<class R>
+	static void register_func(const char * func_name, R(*func)()){
+
+		typedef R(*func_ptr)();
+
+		void *userdata = lua_newuserdata(state(), sizeof(func_ptr));
+		new(userdata)func_ptr(func);
+
+		lua_pushcclosure(state(),
+			[](lua_State *l)->int{
+			void* userdata = lua_touserdata(l, lua_upvalueindex(1));
+			ilua_to_impl to_impl(l, 1);
+			return func_selector<R, std::is_void<R>::value >::call(userdata);
+		}, 1);
+
+		lua_setglobal(state(), func_name);
+	}
+
 	/////////////////////// call_function for register  //////////////////////////////
 
+	// has params
 	template<class R, bool b = (bool)std::is_void<void>::value >
 	struct func_selector{
 	public:
@@ -98,6 +136,12 @@ struct ilua_impl{
 		static int call(void* userdata, Args ...args){
 			typedef R(*func_ptr)(Args...);
 			(*(func_ptr*)userdata)(args...);
+			return 0;
+		}
+
+		static int call(void* userdata){
+			typedef R(*func_ptr)();
+			(*(func_ptr*)userdata)();
 			return 0;
 		}
 	};
@@ -111,6 +155,12 @@ struct ilua_impl{
 			ilua_push_impl::push((*(func_ptr*)userdata)(args...));
 			return 1;
 		}
+
+		static int call(void* userdata){
+			typedef R(*func_ptr)();
+			ilua_push_impl::push((*(func_ptr*)userdata)());
+			return 1;
+		}
 	};
 
 
@@ -121,8 +171,24 @@ struct ilua_impl{
 		return func_selector<R, std::is_void<void>::value >::call(userdata, to_impl.to<Args>()...);
 	}
 
-	struct table{
+	//no params
 
+	struct table{
+	public:
+		enum data_type{nil,integer,floating,boolean,number,string,table_};
+
+		void pushstring(std::string string){
+			printf("get string %s.\n", string.c_str());
+		}
+		void pushnumber(double number){
+			printf("get number %f.\n", number);
+		}
+		void pushtable(table t){
+			printf("get table.\n");
+		}
+		void pushnil(){
+			printf("get nil.\n");
+		}
 	};
 
 	/////////////////////// to value //////////////////////////////
@@ -170,7 +236,15 @@ struct ilua_impl{
 			lua_pushnil(l);
 			int type = lua_type(state(), index);//debug用
 			while (lua_next(l, index)){
-				int value = lua_tointeger(l, -1);
+				if (lua_isnumber(l,-1)){
+					t.pushnumber(lua_tonumber(state(), -1));
+				}
+				else if (lua_isstring(state(), -1)){
+					t.pushstring(std::string(lua_tostring(state(), -1)));
+				} 
+				else if (lua_istable(state(), -1)){
+					t.pushtable(ilua_to_impl(l,-1).to<table>());
+				}
 				lua_pop(l, 1);
 			}
 			if (counter < 0){
