@@ -138,27 +138,46 @@ struct ilua_impl{
 
 		//int , char, short, bool 都走这里
 		template<class R>
-		R&& to(typename std::enable_if<std::is_integral<R>::value >::type* cond = 0){ return lua_tointeger(l, counter++); }
+		R&& to(typename std::enable_if<std::is_integral<R>::value >::type* cond = 0){
+			if (counter<0)return lua_tointeger(l, counter--);
+			return lua_tointeger(l, counter++);
+		}
 
 		//小数
 		template<class R>
-		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ return lua_tonumber(l, counter++); }
+		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ 
+			if (counter<0) return lua_tonumber(l, counter--);
+			return lua_tonumber(l, counter++);
+		}
 	
 		//返回值如何实现零拷贝呢
 		template<class R>
-		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){ return std::string(lua_tostring(l, counter++));}
+		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){ 
+			if (counter<0) return std::string(lua_tostring(l, counter--));
+			return std::string(lua_tostring(l, counter++));
+		}
 
 		//返回值如何实现零拷贝呢
 		template<class R>
 		R to(typename std::enable_if<std::is_same<R, table >::value >::type* cond = 0){ 
 			table t;
-			int type = lua_type(l, counter++);
-			int index = lua_gettop(l);
+			int index = 0;
+			if (counter < 0){ 
+				index = counter - 1;
+			}else{ 
+				index = counter;
+			}
 			lua_pushnil(l);
+			int type = lua_type(state(), index);//debug用
 			while (lua_next(l, index)){
 				int value = lua_tointeger(l, -1);
 				lua_pop(l, 1);
 			}
+			if (counter < 0){
+				counter--;
+				return t;
+			}
+			counter++;
 			return t;
 		}
 
