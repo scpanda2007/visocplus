@@ -8,6 +8,8 @@ extern "C"{
 #include <functional>
 #include <utility>
 #include <type_traits>
+#include <vector>
+#include <memory>
 
 /*
 ** TODO: 完成table数据的创建
@@ -37,6 +39,9 @@ struct ilua_impl{
 	}
 	static void dofile(const char* file_pathe){
 		luaL_dofile(state(), file_pathe);
+	}
+	static void newtable(){
+		lua_newtable(state());
 	}
 
 	static void call_func_iteral(int args...){}
@@ -163,7 +168,7 @@ struct ilua_impl{
 		}
 	};
 
-
+	
 	template<class R, class ...Args>
 	static int closure_func(lua_State *l){
 		void* userdata = lua_touserdata(l, lua_upvalueindex(1));
@@ -173,21 +178,86 @@ struct ilua_impl{
 
 	//no params
 
-	struct table{
+	struct table_impl{
 	public:
-		enum data_type{nil,integer,floating,boolean,number,string,table_};
+		enum data_type{nil,integer,floating,number,string,table_};
 
-		void pushstring(std::string string){
-			printf("get string %s.\n", string.c_str());
+		struct table_item{
+			data_type type_;
+			union{
+				int integer_;
+				double number_;
+			};
+
+			std::shared_ptr<std::string> str_ptr_;
+			std::shared_ptr<table_impl> table_ptr_;
+
+			~table_item(){}
+			table_item(){ type_ = data_type::nil;}
+
+			template<class Arg>
+			table_item(Arg arg0, typename std::enable_if<std::is_integral<Arg>::value >::type* cond = 0){
+				type_ = data_type::integer;
+				integer_ = arg0;
+				printf(" item :: integer --> %d\n", arg0);
+			}
+
+			template<class Arg>
+			table_item(Arg arg0, typename std::enable_if<std::is_floating_point<Arg>::value >::type *cond = 0){
+				type_ = data_type::floating;
+				number_ = arg0;
+				printf(" item :: floating --> %f\n", arg0);
+			}
+
+			template<class Arg>
+			table_item(Arg arg0, typename std::enable_if<std::is_same<Arg, std::string >::value >::type* cond = 0){
+				type_ = data_type::string;
+				str_ptr_ = std::shared_ptr<std::string>(new std::string(arg0));
+				printf(" item :: string --> %s\n", str_ptr_->c_str());
+			}
+
+			template<class Arg>
+			table_item(Arg arg0, typename std::enable_if<std::is_same<Arg, ilua_impl::table_impl >::value >::type* cond = 0){
+				type_ = data_type::table_;
+				table_ptr_ = std::shared_ptr<table_impl>(new table_impl(arg0));
+				printf(" item :: table \n");
+			}
+
+			void push(){
+				switch (type_){
+				case data_type::nil:lua_pushnil(ilua_impl::state()); break;
+				case data_type::floating:ilua_impl::ilua_push_impl::push(number_); break;
+				case data_type::integer:ilua_impl::ilua_push_impl::push(integer_); break;
+				case data_type::string:ilua_impl::ilua_push_impl::push((*str_ptr_)); break;
+				case data_type::table_:{
+					table_ptr_->push();
+				}break;
+				}
+			}
+		};
+
+		std::vector<table_item> array_;
+
+		table_impl(){}
+		table_impl(table_impl&& other){
+			array_ = std::vector<table_item>(other.array_);
 		}
-		void pushnumber(double number){
-			printf("get number %f.\n", number);
+
+		template<class Arg>
+		void put(Arg&& arg){
+			array_.push_back(table_item(std::forward<Arg>(arg)));
 		}
-		void pushtable(table t){
-			printf("get table.\n");
-		}
-		void pushnil(){
+		void putnil(){
 			printf("get nil.\n");
+			array_.push_back(table_item());
+		}
+		void push(){
+			ilua_impl::newtable();
+			for (int i = 0; i < (int)array_.size(); i++){
+				ilua_impl::ilua_push_impl::push(i + 1);
+				array_.at(i).push();
+				lua_settable(state(), -3);
+			}
 		}
 	};
 
@@ -225,8 +295,8 @@ struct ilua_impl{
 
 		//返回值如何实现零拷贝呢
 		template<class R>
-		R to(typename std::enable_if<std::is_same<R, table >::value >::type* cond = 0){ 
-			table t;
+		R to(typename std::enable_if<std::is_same<R, table_impl >::value >::type* cond = 0){
+			table_impl t;
 			int index = 0;
 			if (counter < 0){ 
 				index = counter - 1;
@@ -234,16 +304,19 @@ struct ilua_impl{
 				index = counter;
 			}
 			lua_pushnil(l);
-			int type = lua_type(state(), index);//debug用
+			int type = lua_type(l, index);//debug用
 			while (lua_next(l, index)){
-				if (lua_isnumber(l,-1)){
-					t.pushnumber(lua_tonumber(state(), -1));
+				if (lua_isnil(l, -1)){
+					t.putnil();
 				}
-				else if (lua_isstring(state(), -1)){
-					t.pushstring(std::string(lua_tostring(state(), -1)));
+				else if (lua_isnumber(l,-1)){
+					t.put(lua_tonumber(l, -1));
+				}
+				else if (lua_isstring(l, -1)){
+					t.put(std::string(lua_tostring(l, -1)));
 				} 
-				else if (lua_istable(state(), -1)){
-					t.pushtable(ilua_to_impl(l,-1).to<table>());
+				else if (lua_istable(l, -1)){
+					t.put(ilua_to_impl(l, -1).to<table_impl>());
 				}
 				lua_pop(l, 1);
 			}
@@ -277,6 +350,11 @@ struct ilua_impl{
 			lua_pushstring(state(), arg.c_str()); return 1;
 		}
 
+		template<class Arg>
+		static int push(Arg arg, typename std::enable_if<std::is_same<Arg, table_impl >::value >::type* = 0){
+			arg.push();
+			return 1;
+		}
 
 	};
 

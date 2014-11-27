@@ -31,7 +31,7 @@ static int&& test4(){
 	return std::move(b);
 }
 
-static void test5(ilua_impl::table t){
+static void test5(ilua_impl::table_impl t){
 	;//hehehe test get lua table arg
 }
 
@@ -72,6 +72,26 @@ namespace test_callfun{
 		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", std::string("50000"), e).c_str());
 		printf("call lua function :: %s\n", ilua_impl::call_luafunc<std::string>("addstring", std::string("60000"), std::string("70000")).c_str());
 	}
+
+	void test_table(){
+		ilua_impl::table_impl t;
+		ilua_impl::table_impl sub_t_1;
+		sub_t_1.put(1);
+		sub_t_1.put(std::string("ss"));
+		sub_t_1.put(std::string("hehe"));
+		ilua_impl::table_impl sub_t_2;
+		ilua_impl::table_impl sub_t_2_1;
+		sub_t_2_1.put(std::string("ssss"));
+		sub_t_2.put(sub_t_2_1);
+		t.put(2);
+		t.put(3);
+		t.put(std::string("ss"));
+		t.put(sub_t_1);
+		t.put(sub_t_2);
+		t.put(true);	
+		t.put(std::string("hehehehe"));
+		ilua_impl::call_luafunc<int>("printtable", t);
+	}
 }
 
 int main(int argc, char* argv[]){
@@ -85,13 +105,14 @@ int main(int argc, char* argv[]){
 	ilua::register_func("test5", test5);
 	ilua::dofile("../../src/ilua/src/test/add.lua");
 
-	//printf("result test4 is .... %d\n", test4());
+	test_callfun::test_table();
+	printf("result test4 is .... %d\n", test4());
 
-	//test_callfun::test_int();
-	//test_callfun::test_float();
-	//ilua_impl::call_luafunc<ilua_impl::table>("gettable", 0);
-	//ilua_impl::call_luafunc<ilua_impl::table>("gettable0", 0);
-	//test_callfun::test_string();
+	test_callfun::test_int();
+	test_callfun::test_float();
+	ilua_impl::call_luafunc<ilua_impl::table_impl>("gettable", 0);
+	ilua_impl::call_luafunc<ilua_impl::table_impl>("gettable0", 0);
+	test_callfun::test_string();
 
 	ilua::close();
 	//*/
