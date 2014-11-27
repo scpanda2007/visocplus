@@ -84,17 +84,6 @@ struct ilua_impl{
 		}
 	};
 
-	//返回值如何实现零拷贝呢
-	template<class R, class ...Args>
-	static R call_luafunc(const char* func_name, Args&& ... args){
-		return 	call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name, std::forward<Args>(args)...);
-	}
-
-	template<class R>
-	static R call_luafunc(const char* func_name){
-		return 	call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name);
-	}
-
 	template<class R, class ...Args>
 	static void register_func(const char * func_name, R(*func)(Args...)){
 		
