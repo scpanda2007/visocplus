@@ -33,3 +33,6 @@ print("test ---> ", test(1,2,3))
 print("test4 ---> ", test4())
 print("test2 --> ", test2(1,2,3))
 print("test5 --> ", test5({1,2,3,{"s","ss",{1,1,1},{2,2,2}},"hehehe"}))
+
+print("test6 --> ")
+printtable(test6())

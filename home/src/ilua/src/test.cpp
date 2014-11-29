@@ -32,7 +32,27 @@ static int&& test4(){
 }
 
 static void test5(ilua::table t){
-	;//hehehe test get lua table arg
+	printf("test5 size is %d",t.array_->size());//hehehe test get lua table arg
+}
+
+static ilua::table test6(){
+	ilua_impl::table_impl t;
+	ilua_impl::table_impl sub_t_1;
+	sub_t_1.put(1);
+	sub_t_1.put(std::string("ss"));
+	sub_t_1.put(std::string("hehe"));
+	ilua_impl::table_impl sub_t_2;
+	ilua_impl::table_impl sub_t_2_1;
+	sub_t_2_1.put(std::string("ssss"));
+	sub_t_2.put(sub_t_2_1);
+	t.put(2);
+	t.put(3);
+	t.put(std::string("ss"));
+	t.put(sub_t_1);
+	t.put(sub_t_2);
+	t.put(true);
+	t.put(std::string("hehehehe"));
+	return t;
 }
 
 namespace test_callfun{
@@ -102,8 +122,10 @@ int main(int argc, char* argv[]){
 	ilua::register_func("test2", test3);
 	ilua::register_func("test4", test4);
 	ilua::register_func("test5", test5);
+	ilua::register_func("test6", test6);
+	
 	ilua::dofile("../../src/ilua/src/test/add.lua");
-
+	printf("===========================================");
 	test_callfun::test_table();
 	printf("result test4 is .... %d\n", test4());
 
