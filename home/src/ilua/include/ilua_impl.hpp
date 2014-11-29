@@ -158,14 +158,6 @@ struct ilua_impl{
 		}
 	};
 
-	
-	template<class R, class ...Args>
-	static int closure_func(lua_State *l){
-		void* userdata = lua_touserdata(l, lua_upvalueindex(1));
-		ilua_to_impl to_impl(l, 1);
-		return func_selector<R, std::is_void<void>::value >::call(userdata, to_impl.to<Args>()...);
-	}
-
 	//no params
 
 	struct table_impl{
