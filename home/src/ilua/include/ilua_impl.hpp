@@ -10,6 +10,7 @@ extern "C"{
 #include <type_traits>
 #include <vector>
 #include <memory>
+#include <assert.h>
 
 /*
 ** TODO: 完成table数据的创建
@@ -223,28 +224,63 @@ struct ilua_impl{
 				}break;
 				}
 			}
+
+			//取值 
+			template<class R>
+			R to(typename std::enable_if<std::is_integral<R>::value >::type* cond = 0){
+				if (type_ == data_type::nil) return 0;
+				assert(type_ == data_type::integer || type_ == data_type::number);
+				if (type_ == data_type::number)return number_;
+				return integer_;
+			}
+			
+			template<class R>
+			R to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){
+				if (type_ == data_type::nil) return 0.0f;
+				assert(type_ == data_type::integer || type_ == data_type::number);
+				if (type_ == data_type::number)return number_;
+				return integer_;
+			}
+			
+			template<class R>
+			R to(typename std::enable_if<std::is_same<R, std::shared_ptr<std::string> >::value >::type* cond = 0){
+				if (type_ == data_type::nil) return nullptr;
+				assert(type_ == data_type::string);
+				return str_ptr_;
+			}
+			
+			template<class R>
+			R to(typename std::enable_if<std::is_same<R, std::shared_ptr<ilua_impl::table_impl> >::value >::type* cond = 0){
+				if (type_ == data_type::nil) return nullptr;
+				assert(type_ == data_type::table_);
+				return table_ptr_;
+			}
 		};
 
-		std::vector<table_item> array_;
+		std::shared_ptr<std::vector<table_item> > array_;
 
-		table_impl(){}
+		// 提供给外部调用的接口
+		table_impl(){
+			array_ = std::shared_ptr<std::vector<table_item> >(new std::vector<table_item>());
+		}
 		table_impl(table_impl&& other){
-			array_ = std::vector<table_item>(other.array_);
+			array_ = other.array_;
 		}
 
 		template<class Arg>
 		void put(Arg&& arg){
-			array_.push_back(table_item(std::forward<Arg>(arg)));
+			array_->push_back(table_item(std::forward<Arg>(arg)));
 		}
+
 		void putnil(){
 			printf("get nil.\n");
-			array_.push_back(table_item());
+			array_->push_back(table_item());
 		}
 		void push(){
 			ilua_impl::newtable();
-			for (int i = 0; i < (int)array_.size(); i++){
+			for (int i = 0; i < (int)array_->size(); i++){
 				ilua_impl::ilua_push_impl::push(i + 1);
-				array_.at(i).push();
+				array_->at(i).push();
 				lua_settable(state(), -3);
 			}
 		}

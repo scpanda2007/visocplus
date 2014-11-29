@@ -95,7 +95,6 @@ namespace test_callfun{
 }
 
 int main(int argc, char* argv[]){
-
 	void_function2();
 	//*/
 	ilua::open();
