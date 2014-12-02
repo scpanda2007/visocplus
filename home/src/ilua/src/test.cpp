@@ -132,33 +132,33 @@ namespace testluacb{
 	}
 
 	void test1(){
-		lua_getglobal(ilua_impl::state(), "get_funcref");
-		lua_pcall(ilua_impl::state(), 0, 4, 0);
-		int type = lua_type(ilua_impl::state(), -1);
-		int type2 = lua_type(ilua_impl::state(), -2);
+		//lua_getglobal(ilua_impl::state(), "get_funcref");
+		//lua_pcall(ilua_impl::state(), 0, 4, 0);
+		//int type = lua_type(ilua_impl::state(), -1);
+		//int type2 = lua_type(ilua_impl::state(), -2);
 
-		lua_pushvalue(ilua_impl::state(), -2);
-		int fetch2 = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
-		lua_pushvalue(ilua_impl::state(), -4);
-		int fetch4 = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
+		//lua_pushvalue(ilua_impl::state(), -2);
+		//int fetch2 = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
+		//lua_pushvalue(ilua_impl::state(), -4);
+		//int fetch4 = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
 
-		int type3 = lua_type(ilua_impl::state(), -3);
-		int type4 = lua_type(ilua_impl::state(), -4);
+		//int type3 = lua_type(ilua_impl::state(), -3);
+		//int type4 = lua_type(ilua_impl::state(), -4);
 
-		lua_pop(ilua_impl::state(), 4);
+		//lua_pop(ilua_impl::state(), 4);
 
 
-		lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
-		lua_pcall(ilua_impl::state(), 0, 0, 0);
+		//lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
+		//lua_pcall(ilua_impl::state(), 0, 0, 0);
 
-		luaL_unref(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
+		//luaL_unref(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
 
-		lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch4);
-		lua_pcall(ilua_impl::state(), 0, 0, 0);
+		//lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch4);
+		//lua_pcall(ilua_impl::state(), 0, 0, 0);
 
-		// 因为unref掉了 这里会失效
-		lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
-		lua_pcall(ilua_impl::state(), 0, 0, 0);
+		//// 因为unref掉了 这里会失效
+		//lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
+		//lua_pcall(ilua_impl::state(), 0, 0, 0);
 	}
 
 	ilua_impl::lua_callback_impl test_d_2(){
