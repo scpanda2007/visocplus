@@ -29,6 +29,18 @@ function printtable(a)
 	print("]")
 end
 
+function funcrefxx()
+	print("funcref....")
+end
+
+function get_funcref()
+	return function() print("funcref iiiiiiiiiiiiiiii") end,1,funcrefxx,"xxxx"
+end
+
+function get_funcref1()
+	return function() print("funcref xxxxxxxxxxxxx") end
+end
+
 print("test ---> ", test(1,2,3))
 print("test4 ---> ", test4())
 print("test2 --> ", test2(1,2,3))

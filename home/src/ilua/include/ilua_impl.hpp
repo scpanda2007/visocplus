@@ -50,23 +50,20 @@ struct ilua_impl{
 	template<class R, bool b = (bool)std::is_void<void>::value >
 	struct call_lua_selector{
 		template<class ...Args>
-		static R call_lua(const char* func_name, Args&& ...args){
-			lua_getglobal(state(), func_name);
+		static R call_lua(Args&& ...args){
 			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
-			lua_pcall(state(), sizeof...(args), 1, 0);
+			lua_pcall(state(), sizeof...(args), 0, 0);
 		}
 
-		static R call_lua(const char* func_name){
-			lua_getglobal(state(), func_name);
-			lua_pcall(state(), 0, 1, 0);
+		static R call_lua(){
+			lua_pcall(state(), 0, 0, 0);
 		}
 	};
 
 	template<class R>
 	struct call_lua_selector<R, (bool)std::is_void<int>::value>{
 		template<class ...Args>
-		static R call_lua(const char* func_name, Args&& ...args){
-			lua_getglobal(state(), func_name);
+		static R call_lua(Args&& ...args){
 			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 			ilua_to_impl to_impl(state(), -1);
@@ -75,8 +72,7 @@ struct ilua_impl{
 			return result;
 		}
 
-		static R call_lua(const char* func_name){
-			lua_getglobal(state(), func_name);
+		static R call_lua(){
 			lua_pcall(state(), 0, 1, 0);
 			ilua_to_impl to_impl(state(), -1);
 			R result = to_impl.to<R>();
@@ -158,11 +154,59 @@ struct ilua_impl{
 		}
 	};
 
-	//no params
+	/////////////////////////////////////////// lua 函数回调 ///////////////////////////////////////////////////////
+	struct lua_callback_impl_inl{
+	private:
+		lua_callback_impl_inl(lua_callback_impl_inl& other){}
+		lua_callback_impl_inl(lua_callback_impl_inl&& other){}
+	public:
+		int ref = 0;//索引值
+		lua_callback_impl_inl(){
+			ref = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
+			printf(" construct %d", ref);
+		}
+		~lua_callback_impl_inl(){
+			printf(" destroy lua_callback ref:%d", ref);
+			luaL_unref(ilua_impl::state(), LUA_REGISTRYINDEX, ref);
+		}
+	};
 
+	struct lua_callback_impl{
+		std::shared_ptr<lua_callback_impl_inl> impl_;
+		lua_callback_impl& ref(){
+			impl_ = std::shared_ptr<lua_callback_impl_inl>(new lua_callback_impl_inl());
+			return *this;
+		}
+		template<class R, class ...Args>
+		R call(Args&& ...args){
+			try{
+				lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, impl_->ref);
+				return 	ilua_impl::call_lua_selector<R, std::is_void<R>::value>::call_lua(std::forward<Args>(args)...);
+			}
+			catch (std::exception& e)
+			{
+				printf(e.what());
+				throw e;
+			}
+		}
+		template<class R, class ...Args>
+		R call(){
+			try{
+				lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, impl_->ref);
+				return 	ilua_impl::call_lua_selector<R, std::is_void<R>::value>::call_lua();
+			}
+			catch (std::exception& e)
+			{
+				printf(e.what());
+				throw e;
+			}
+		}
+	};
+
+	/////////////////////////////////////////// 表格 /////////////////////////////////////////////////
 	struct table_impl{
 	public:
-		enum data_type{nil,integer,floating,number,string,table_};
+		enum data_type{ nil, integer, floating, number, string, table_, callback };
 
 		struct table_item{
 			data_type type_;
@@ -173,6 +217,7 @@ struct ilua_impl{
 
 			std::shared_ptr<std::string> str_ptr_;
 			std::shared_ptr<table_impl> table_ptr_;
+			lua_callback_impl lua_cb_;
 
 			~table_item(){}
 			table_item(){ type_ = data_type::nil;}
@@ -205,12 +250,21 @@ struct ilua_impl{
 				printf(" item :: table \n");
 			}
 
+			
+			template<class Arg>
+			table_item(Arg arg0, typename std::enable_if<std::is_same<Arg, lua_callback_impl >::value >::type* cond = 0){
+				type_ = data_type::callback;
+				lua_cb_ = arg0;
+				printf(" item :: callback \n");
+			}
+
 			void push(){
 				switch (type_){
 				case data_type::nil:lua_pushnil(ilua_impl::state()); break;
 				case data_type::floating:ilua_impl::ilua_push_impl::push(number_); break;
 				case data_type::integer:ilua_impl::ilua_push_impl::push(integer_); break;
 				case data_type::string:ilua_impl::ilua_push_impl::push((*str_ptr_)); break;
+				case data_type::callback:lua_pushnil(ilua_impl::state()); break;//不支持传入
 				case data_type::table_:{
 					table_ptr_->push();
 				}break;
@@ -246,6 +300,13 @@ struct ilua_impl{
 				if (type_ == data_type::nil) return nullptr;
 				assert(type_ == data_type::table_);
 				return table_ptr_;
+			}
+
+			template<class R>
+			R to(typename std::enable_if<std::is_same<R, lua_callback_impl >::value >::type* cond = 0){
+				if (type_ == data_type::nil) return lua_callback_impl();
+				assert(type_ == data_type::callback);
+				return lua_cb_;
 			}
 		};
 
@@ -292,39 +353,43 @@ struct ilua_impl{
 		//int , char, short, bool 都走这里
 		template<class R>
 		R&& to(typename std::enable_if<std::is_integral<R>::value >::type* cond = 0){
-			if (counter<0)return lua_tointeger(l, counter--);
-			return lua_tointeger(l, counter++);
+			return lua_tointeger(l, counter < 0 ? counter-- : counter++);
 		}
 
 		//小数
 		template<class R>
 		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ 
-			if (counter<0) return lua_tonumber(l, counter--);
-			return lua_tonumber(l, counter++);
+			return lua_tonumber(l, counter < 0 ? counter-- : counter++);
 		}
 	
 		//返回值如何实现零拷贝呢
 		template<class R>
 		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){ 
-			if (counter<0) return std::string(lua_tostring(l, counter--));
-			return std::string(lua_tostring(l, counter++));
+			return std::string(lua_tostring(l, counter < 0 ? counter-- : counter++));
+		}
+
+		//返回值如何实现零拷贝呢
+		template<class R>
+		R to(typename std::enable_if<std::is_same<R, ilua_impl::lua_callback_impl >::value >::type* cond = 0){
+			lua_pushvalue(ilua_impl::state(), counter < 0 ? counter-- : counter++);
+			return lua_callback_impl().ref();
 		}
 
 		//返回值如何实现零拷贝呢
 		template<class R>
 		R to(typename std::enable_if<std::is_same<R, table_impl >::value >::type* cond = 0){
 			table_impl t;
-			int index = 0;
-			if (counter < 0){ 
-				index = counter - 1;
-			}else{ 
-				index = counter;
-			}
+			int index = counter < 0 ? ((counter--)-1) : counter++;
 			lua_pushnil(l);
 			int type = lua_type(l, index);//debug用
 			while (lua_next(l, index)){
+				int type = lua_type(ilua_impl::state(), -1);
+				
 				if (lua_isnil(l, -1)){
 					t.putnil();
+				}
+				else if (type == LUA_TFUNCTION){
+					t.put(ilua_to_impl(l, -1).to<lua_callback_impl>());
 				}
 				else if (lua_isnumber(l,-1)){
 					t.put(lua_tonumber(l, -1));
@@ -337,11 +402,6 @@ struct ilua_impl{
 				}
 				lua_pop(l, 1);
 			}
-			if (counter < 0){
-				counter--;
-				return t;
-			}
-			counter++;
 			return t;
 		}
 

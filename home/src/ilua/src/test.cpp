@@ -114,6 +114,56 @@ namespace test_callfun{
 	}
 }
 
+namespace testluacb{
+
+	void test2(){
+		ilua_impl::lua_callback_impl cb = ilua::call_luafunc<ilua_impl::lua_callback_impl>("get_funcref1");
+		cb.call<void>();
+	}
+
+	void test1(){
+		lua_getglobal(ilua_impl::state(), "get_funcref");
+		lua_pcall(ilua_impl::state(), 0, 4, 0);
+		int type = lua_type(ilua_impl::state(), -1);
+		int type2 = lua_type(ilua_impl::state(), -2);
+
+		lua_pushvalue(ilua_impl::state(), -2);
+		int fetch2 = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
+		lua_pushvalue(ilua_impl::state(), -4);
+		int fetch4 = luaL_ref(ilua_impl::state(), LUA_REGISTRYINDEX);
+
+		int type3 = lua_type(ilua_impl::state(), -3);
+		int type4 = lua_type(ilua_impl::state(), -4);
+
+		lua_pop(ilua_impl::state(), 4);
+
+
+		lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
+		lua_pcall(ilua_impl::state(), 0, 0, 0);
+
+		luaL_unref(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
+
+		lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch4);
+		lua_pcall(ilua_impl::state(), 0, 0, 0);
+
+		// 因为unref掉了 这里会失效
+		lua_rawgeti(ilua_impl::state(), LUA_REGISTRYINDEX, fetch2);
+		lua_pcall(ilua_impl::state(), 0, 0, 0);
+	}
+
+	ilua_impl::lua_callback_impl test_d_2(){
+		return ilua_impl::lua_callback_impl().ref();
+	}
+
+	void test_d_1(ilua_impl::lua_callback_impl cb){
+
+	}
+
+	void test_d(){
+		test_d_1(test_d_2());
+	}
+}
+
 int main(int argc, char* argv[]){
 	void_function2();
 	//*/
@@ -135,7 +185,10 @@ int main(int argc, char* argv[]){
 	ilua::call_luafunc<ilua::table>("gettable0", 0);
 	test_callfun::test_string();
 
+	testluacb::test2();
+
 	ilua::close();
+
 	//*/
 	system("pause");
 	return 0;

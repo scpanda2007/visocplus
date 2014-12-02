@@ -9,6 +9,7 @@ using ilua_item = ilua_table_impl::ilua_table_item;
 
 namespace ilua{
 	using table = ilua_impl::table_impl;
+	using lua_callback = ilua_impl::lua_callback_impl;
 	static void open(){
 		try{
 			ilua_impl::open();
@@ -54,7 +55,8 @@ namespace ilua{
 	template<class R, class ...Args>
 	static R call_luafunc(const char* func_name, Args&& ... args){
 		try{
-			return 	ilua_impl::call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name, std::forward<Args>(args)...);
+			lua_getglobal(ilua_impl::state(), func_name);
+			return 	ilua_impl::call_lua_selector<R, std::is_void<R>::value>::call_lua(std::forward<Args>(args)...);
 		}
 		catch (std::exception& e)
 		{
@@ -65,7 +67,8 @@ namespace ilua{
 	template<class R>
 	static R call_luafunc(const char* func_name){
 		try{
-			return 	ilua_impl::call_lua_selector<R, std::is_void<R>::value>::call_lua(func_name);
+			lua_getglobal(ilua_impl::state(), func_name);
+			return 	ilua_impl::call_lua_selector<R, std::is_void<R>::value>::call_lua();
 		}
 		catch (std::exception& e)
 		{
