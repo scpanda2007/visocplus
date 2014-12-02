@@ -184,6 +184,7 @@ int main(int argc, char* argv[]){
 	ilua::register_func("test5", test5);
 	ilua::register_func("test6", test6);
 	ilua::register_func("test7", testluacb::test7);
+	ilua::register_func("test8", testluacb::test8);
 
 	ilua::dofile("../../src/ilua/src/test/add.lua");
 	printf("===========================================");
