@@ -37,9 +37,13 @@ function get_funcref()
 	return function() print("funcref iiiiiiiiiiiiiiii") end,1,funcrefxx,"xxxx"
 end
 
+local refx = 0
+
 function get_funcref1()
-	return function() print("funcref xxxxxxxxxxxxx") end
+	return function() print("funcref xxxxxxxxxxxxx",refx) end
 end
+
+refx = refx + 1
 
 print("test ---> ", test(1,2,3))
 print("test4 ---> ", test4())
