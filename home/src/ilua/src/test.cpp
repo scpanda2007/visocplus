@@ -115,6 +115,16 @@ namespace test_callfun{
 }
 
 namespace testluacb{
+	void test7(ilua_impl::lua_callback_impl cb, ilua_impl::table_impl t){
+		printf("test7 size is %d", t.array_->size());//hehehe test get lua table arg
+		cb.call<void>(t);
+	}
+
+	void test8(ilua_impl::table_impl t){
+		std::shared_ptr<ilua::table> ptr_ = t.array_->at(0).to<std::shared_ptr<ilua::table> >();
+		ilua::lua_callback cb = t.array_->at(1).to<ilua::lua_callback>();
+		cb.call<void>(*ptr_);
+	}
 
 	void test2(){
 		ilua_impl::lua_callback_impl cb = ilua::call_luafunc<ilua_impl::lua_callback_impl>("get_funcref1");
@@ -173,9 +183,12 @@ int main(int argc, char* argv[]){
 	ilua::register_func("test4", test4);
 	ilua::register_func("test5", test5);
 	ilua::register_func("test6", test6);
-	
+	ilua::register_func("test7", testluacb::test7);
+
 	ilua::dofile("../../src/ilua/src/test/add.lua");
 	printf("===========================================");
+
+	//*/
 	test_callfun::test_table();
 	printf("result test4 is .... %d\n", test4());
 
@@ -186,6 +199,7 @@ int main(int argc, char* argv[]){
 	test_callfun::test_string();
 
 	testluacb::test2();
+	//*/
 
 	ilua::close();
 

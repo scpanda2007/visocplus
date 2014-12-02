@@ -43,6 +43,10 @@ function get_funcref1()
 	return function() print("funcref xxxxxxxxxxxxx",refx) end
 end
 
+function get_funcref2()
+	return function(a) print("funcref yyyyyyyyyyyyyy",a) end
+end
+
 refx = refx + 1
 
 print("test ---> ", test(1,2,3))
@@ -52,3 +56,5 @@ print("test5 --> ", test5({1,2,3,{"s","ss",{1,1,1},{2,2,2}},"hehehe"}))
 
 print("test6 --> ")
 printtable(test6())
+print("test7 --> ", test7(printtable,{1}))
+--print("test8 --> ", test8({{1,2,3},printtable}))

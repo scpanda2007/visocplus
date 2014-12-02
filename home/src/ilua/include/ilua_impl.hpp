@@ -92,7 +92,7 @@ struct ilua_impl{
 		lua_pushcclosure(state(), 
 			[](lua_State *l)->int{
 				void* userdata = lua_touserdata(l, lua_upvalueindex(1));
-				ilua_to_impl to_impl(l, 1);
+				ilua_to_impl to_impl(l, -1);
 				return func_selector<R, std::is_void<R>::value >::call(userdata, to_impl.to<Args>()...);
 		}, 1);
 
