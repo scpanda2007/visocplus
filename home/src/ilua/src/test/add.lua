@@ -56,5 +56,15 @@ print("test5 --> ", test5({1,2,3,{"s","ss",{1,1,1},{2,2,2}},"hehehe"}))
 
 print("test6 --> ")
 printtable(test6())
-print("test7 --> ", test7(printtable,{1}))
+print("test7 --> ", test7(function(a) print("[")
+	print("table is -->",a,#a)
+	print("+++++++++++++++++++++++++++++")
+	for _,value in ipairs(a) do 
+		if type(value)=="table" then
+			printtable(value)
+		else
+			print("item::",value)
+		end
+	end
+	print("]") end,{1}))
 print("test8 --> ", test8({{1,2,3},printtable}))

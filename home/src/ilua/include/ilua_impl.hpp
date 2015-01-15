@@ -39,7 +39,11 @@ struct ilua_impl{
 		lua_close(state());
 	}
 	static void dofile(const char* file_pathe){
-		luaL_dofile(state(), file_pathe);
+		int erro = luaL_dofile(state(), file_pathe);
+		if (erro != 0)
+		{
+			printf("¼ÓÔØLUAÎÄ¼ş´íÎó%d%s", erro, lua_tostring(state(), -1));
+		}
 	}
 	static void newtable(){
 		lua_newtable(state());
