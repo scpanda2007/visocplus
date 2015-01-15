@@ -1,11 +1,7 @@
 #pragma once
 
 #include "ilua_impl.hpp"
-#include "ilua_table_impl.hpp"
 #include <stdexcept>
-
-using ilua_table = ilua_table_impl;
-using ilua_item = ilua_table_impl::ilua_table_item;
 
 namespace ilua{
 	using table = ilua_impl::table_impl;
