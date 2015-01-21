@@ -172,9 +172,22 @@ namespace testluacb{
 	void test_d(){
 		test_d_1(test_d_2());
 	}
+
+	void test9(ilua_impl::lua_callback_impl cb){
+		int a = 1;
+		int b = 2;
+		int c = 3;
+		cb.call<void>(a, b, c);
+	}
 }
 
+static void call_func_iteralxx(int args...){}
+static int printxx(int a){ printf("0000%d", a); return 1; }
+
 int main(int argc, char* argv[]){
+
+	call_func_iteralxx(printxx(1),printxx(2));
+
 	void_function2();
 	//*/
 	ilua::open();
@@ -185,16 +198,22 @@ int main(int argc, char* argv[]){
 	ilua::register_func("test6", test6);
 	ilua::register_func("test7", testluacb::test7);
 	ilua::register_func("test8", testluacb::test8);
+	ilua::register_func("test9", testluacb::test9);
 
 	ilua::dofile("../../src/ilua/src/test/add.lua");
 	printf("===========================================");
 
-	//*/
+	printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+	ilua::call_luafunc<std::string>("addstring", 1, 2);
+	printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+	/*/
 	test_callfun::test_table();
 	printf("result test4 is .... %d\n", test4());
 
 	test_callfun::test_int();
 	test_callfun::test_float();
+
 	ilua::call_luafunc<ilua::table>("gettable", 0);
 	ilua::call_luafunc<ilua::table>("gettable0", 0);
 	test_callfun::test_string();

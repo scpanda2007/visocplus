@@ -39,23 +39,17 @@ struct ilua_impl{
 		lua_close(state());
 	}
 	static void dofile(const char* file_pathe){
-		int erro = luaL_dofile(state(), file_pathe);
-		if (erro != 0)
-		{
-			printf("加载LUA文件错误%d%s", erro, lua_tostring(state(), -1));
-		}
+		luaL_dofile(state(), file_pathe);
 	}
 	static void newtable(){
 		lua_newtable(state());
 	}
 
-	static void call_func_iteral(int args...){}
-
 	template<class R, bool b = (bool)std::is_void<void>::value >
 	struct call_lua_selector{
 		template<class ...Args>
 		static R call_lua(Args&& ...args){
-			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
+			ilua_push_impl::push_value(std::forward<Args>(args)...);
 			lua_pcall(state(), sizeof...(args), 0, 0);
 		}
 
@@ -68,7 +62,7 @@ struct ilua_impl{
 	struct call_lua_selector<R, (bool)std::is_void<int>::value>{
 		template<class ...Args>
 		static R call_lua(Args&& ...args){
-			ilua_impl::call_func_iteral(ilua_push_impl::push(std::forward<Args>(args))...);
+			ilua_push_impl::push_value(std::forward<Args>(args)...);
 			lua_pcall(state(), sizeof...(args), 1, 0);
 			ilua_to_impl to_impl(state(), -1);
 			R result = to_impl.to<R>();
@@ -87,17 +81,17 @@ struct ilua_impl{
 
 	template<class R, class ...Args>
 	static void register_func(const char * func_name, R(*func)(Args...)){
-		
+
 		typedef R(*func_ptr)(Args...);
-		
+
 		void *userdata = lua_newuserdata(state(), sizeof(func_ptr));
 		new(userdata)func_ptr(func);
 
-		lua_pushcclosure(state(), 
+		lua_pushcclosure(state(),
 			[](lua_State *l)->int{
-				void* userdata = lua_touserdata(l, lua_upvalueindex(1));
-				ilua_to_impl to_impl(l, -1);
-				return func_selector<R, std::is_void<R>::value >::call(userdata, to_impl.to<Args>()...);
+			void* userdata = lua_touserdata(l, lua_upvalueindex(1));
+			ilua_to_impl to_impl(l, -1);
+			return func_selector<R, std::is_void<R>::value >::call(userdata, to_impl.to<Args>()...);
 		}, 1);
 
 		lua_setglobal(state(), func_name);
@@ -224,7 +218,7 @@ struct ilua_impl{
 			lua_callback_impl lua_cb_;
 
 			~table_item(){}
-			table_item(){ type_ = data_type::nil;}
+			table_item(){ type_ = data_type::nil; }
 
 			template<class Arg>
 			table_item(Arg arg0, typename std::enable_if<std::is_integral<Arg>::value >::type* cond = 0){
@@ -254,7 +248,7 @@ struct ilua_impl{
 				printf(" item :: table \n");
 			}
 
-			
+
 			template<class Arg>
 			table_item(Arg arg0, typename std::enable_if<std::is_same<Arg, lua_callback_impl >::value >::type* cond = 0){
 				type_ = data_type::callback;
@@ -283,7 +277,7 @@ struct ilua_impl{
 				if (type_ == data_type::number)return number_;
 				return integer_;
 			}
-			
+
 			template<class R>
 			R to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){
 				if (type_ == data_type::nil) return 0.0f;
@@ -291,14 +285,14 @@ struct ilua_impl{
 				if (type_ == data_type::number)return number_;
 				return integer_;
 			}
-			
+
 			template<class R>
 			R to(typename std::enable_if<std::is_same<R, std::shared_ptr<std::string> >::value >::type* cond = 0){
 				if (type_ == data_type::nil) return nullptr;
 				assert(type_ == data_type::string);
 				return str_ptr_;
 			}
-			
+
 			template<class R>
 			R to(typename std::enable_if<std::is_same<R, std::shared_ptr<ilua_impl::table_impl> >::value >::type* cond = 0){
 				if (type_ == data_type::nil) return nullptr;
@@ -352,7 +346,7 @@ struct ilua_impl{
 	public:
 		lua_State *l;
 		int counter;
-		ilua_to_impl(lua_State* l_, int counter_) :l(l_),counter(counter_){}
+		ilua_to_impl(lua_State* l_, int counter_) :l(l_), counter(counter_){}
 
 		//int , char, short, bool 都走这里
 		template<class R>
@@ -362,13 +356,13 @@ struct ilua_impl{
 
 		//小数
 		template<class R>
-		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){ 
+		R&& to(typename std::enable_if<std::is_floating_point<R>::value >::type *cond = 0){
 			return lua_tonumber(l, counter < 0 ? counter-- : counter++);
 		}
-	
+
 		//返回值如何实现零拷贝呢
 		template<class R>
-		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){ 
+		R to(typename std::enable_if<std::is_same<R, std::string >::value >::type* cond = 0){
 			return std::string(lua_tostring(l, counter < 0 ? counter-- : counter++));
 		}
 
@@ -383,24 +377,24 @@ struct ilua_impl{
 		template<class R>
 		R to(typename std::enable_if<std::is_same<R, table_impl >::value >::type* cond = 0){
 			table_impl t;
-			int index = counter < 0 ? ((counter--)-1) : counter++;
+			int index = counter < 0 ? ((counter--) - 1) : counter++;
 			lua_pushnil(l);
 			int type = lua_type(l, index);//debug用
 			while (lua_next(l, index)){
 				int type = lua_type(ilua_impl::state(), -1);
-				
+
 				if (lua_isnil(l, -1)){
 					t.putnil();
 				}
 				else if (type == LUA_TFUNCTION){
 					t.put(ilua_to_impl(l, -1).to<lua_callback_impl>());
 				}
-				else if (lua_isnumber(l,-1)){
+				else if (lua_isnumber(l, -1)){
 					t.put(lua_tonumber(l, -1));
 				}
 				else if (lua_isstring(l, -1)){
 					t.put(std::string(lua_tostring(l, -1)));
-				} 
+				}
 				else if (lua_istable(l, -1)){
 					t.put(ilua_to_impl(l, -1).to<table_impl>());
 				}
@@ -416,10 +410,10 @@ struct ilua_impl{
 
 		//int , char, short, bool 都走这里
 		template<class Arg>
-		static int push(Arg arg, typename std::enable_if<std::is_integral<Arg>::value >::type* = 0){ 
+		static int push(Arg arg, typename std::enable_if<std::is_integral<Arg>::value >::type* = 0){
 			lua_pushinteger(state(), arg); return 1;
 		}
-		
+
 		//小数
 		template<class Arg>
 		static int push(Arg arg, typename std::enable_if<std::is_floating_point<Arg>::value >::type* = 0){
@@ -437,6 +431,25 @@ struct ilua_impl{
 			return 1;
 		}
 
+		static inline void push_value()
+		{}
+
+		template < typename T, typename... Args >
+		static void push_value(T && t, Args && ...args)
+		{
+			push_value(std::forward<T>(t));
+			push_value(std::forward<Args>(args)...);
+		}
+
+		template < typename T, typename... Args >
+		static void push_value(T && t)
+		{
+			typedef typename std::remove_cv <
+				typename std::remove_reference<T>::type
+			> ::type value_t;
+
+			push(t);
+		}
 	};
 
 	///////////////////// lua_State //////////////////////////////
